@@ -5,7 +5,6 @@ const { invite_home_owner_to_project } = require('../utils/email');
 
 const createProject = async (req, res) => {
     const { id: designerId } = req.user;
-    console.log(designerId);
     try {
 
         const isDesigner = await Designer.findOne({ designer: designerId });
@@ -24,7 +23,6 @@ const createProject = async (req, res) => {
             title,
             description,
             designer: designerId,
-            budget,
             homeOwnerName,
             homeOwnerEmail,
             homeOwnerPhone,
