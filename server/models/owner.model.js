@@ -23,7 +23,10 @@ const OwnerSchema = mongoose.Schema({
         ref: 'User',
     },
 
-    //more fields to be added...
+    projects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
+    }],
 
 }, { timestamps: true });
 

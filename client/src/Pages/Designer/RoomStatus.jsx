@@ -11,6 +11,7 @@ import axios from 'axios'
 const RoomStatus = ({ percentage }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tasks, setTasks] = useState([])
+  const [percentageofcompletion, setPercentage] = useState(null)
 
 
 
@@ -36,6 +37,8 @@ const RoomStatus = ({ percentage }) => {
       console.log(response)
       console.log(response.data.tasks)
       setTasks(response.data.tasks)
+      setPercentage(Math.round(response.data.percentageOfCompletion))
+
     } catch (error) {
       console.log(error)
     }
@@ -69,7 +72,7 @@ const RoomStatus = ({ percentage }) => {
             </div>
             <div className="text-right">
               <span className="text-xs font-semibold inline-block text-green-600">
-                {percentage || 20}%
+                {percentageofcompletion || 20}%
               </span>
             </div>
           </div>
@@ -87,7 +90,7 @@ const RoomStatus = ({ percentage }) => {
       <div>
         {isModalOpen && (
           <div className="fixed z-10 inset-0 overflow-y-auto">
-            <TaskForm closeModal={closeModal} roomId={roomId} />
+            <TaskForm closeModal={closeModal} roomId={roomId} percentage={percentageofcompletion} />
           </div>
         )}
       </div>
