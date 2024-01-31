@@ -2,30 +2,30 @@ const mongoose = require('mongoose');
 
 const OwnerSchema = mongoose.Schema({
 
-    name:{
+    name: {
         type: String,
         required: true
     },
 
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true
     },
 
-    phone:{
+    phone: {
         type: String,
         required: true,
-        unique: true
+
     },
 
-    owner:{
+    owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
 
     //more fields to be added...
 
-},{timestamps: true});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Owner', OwnerSchema);
