@@ -3,8 +3,9 @@ import TaskCard from "../../Components/Cards/TaskCard";
 import { RiUserAddFill } from "react-icons/ri";
 import { MdAddTask } from "react-icons/md";
 import TaskForm from "../../Components/Designer/Form/TaskForm";
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import CircularProgressBar from "../../Components/Charts/ProgessBar";
 
 
 
@@ -17,6 +18,7 @@ const RoomStatus = ({ percentage }) => {
 
 
   const { roomId } = useParams();
+  const navigate = useNavigate();
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -52,6 +54,10 @@ const RoomStatus = ({ percentage }) => {
     <div>
       <div className="m-2 p-4 text-2xl">
         Drawing Room Status
+
+        <button type="button" class="btn btn-outline-primary border-2 p-2  rounded-lg ml-4" onClick={() => {
+          navigate(`/customerdashboard/${roomId}`)
+        }}>DashBoard</button>
         <div className="flex text-base mt-4 ml-8 gap-5">
           <div className="flex " onClick={openModal}>
             <MdAddTask /> Add Task
@@ -61,7 +67,7 @@ const RoomStatus = ({ percentage }) => {
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="p-6 pt-0">
         <div className="relative pt-1">
           <div className="flex mb-2 items-center justify-between">
@@ -70,11 +76,7 @@ const RoomStatus = ({ percentage }) => {
                 Progress
               </span>
             </div>
-            <div className="text-right">
-              <span className="text-xs font-semibold inline-block text-green-600">
-                {percentageofcompletion || 20}%
-              </span>
-            </div>
+
           </div>
           <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-200 w-full">
             <div
@@ -83,6 +85,10 @@ const RoomStatus = ({ percentage }) => {
             ></div>
           </div>
         </div>
+      </div> */}
+
+      <div>
+
       </div>
 
       <TaskCard tasks={tasks} />
@@ -94,6 +100,7 @@ const RoomStatus = ({ percentage }) => {
           </div>
         )}
       </div>
+      <CircularProgressBar value={percentageofcompletion} />
     </div>
   );
 };

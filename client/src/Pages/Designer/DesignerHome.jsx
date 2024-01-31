@@ -6,6 +6,7 @@ import ImageCard from "../../Components/Cards/ImageCard";
 import { useProject } from "../../context/ProjectContext";
 import ProjectCard from "../../Components/Cards/ProjectCard";
 import { toast } from "react-toastify";
+import Piechart from "../../Components/Charts/PieChart";
 
 
 const DesignerHome = () => {
@@ -32,7 +33,7 @@ const DesignerHome = () => {
       <div className="min-h-screen bg-gray-100">
         <div>
           <p className="ml-8 text-2xl">
-            <br/>
+            <br />
             WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
           </p>
         </div>
@@ -65,12 +66,17 @@ const DesignerHome = () => {
               />
             );
           })}
-          
+
         </div>
 
-
-
-
+        <div className="flex flex-wrap gap-6 ml-12 mt-12">
+          <div className="w-1/2">
+            <Piechart api={'/pichart'} />
+          </div>
+          <div className="w-1/2">
+            <Piechart api={'/pichartbudget'} />
+          </div>
+        </div>
 
 
       </div>

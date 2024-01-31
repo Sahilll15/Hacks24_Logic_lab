@@ -15,6 +15,7 @@ import RoomStatus from "./Pages/Designer/RoomStatus";
 import ContractorHome from "./Pages/Contractor/ContractorHome";
 import ContractorTask from "./Pages/Contractor/ContractorTask";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import CustomerDashBoard from "./Pages/Dashboard/CustomerDashboard";
 
 
 
@@ -39,6 +40,7 @@ const App = () => {
               <Route path="/room/:roomId" element={<RoomStatus />} />
               <Route path="/contractor" element={<ContractorHome />} />
               <Route path="/contractor/task" element={<ContractorTask />} />
+              <Route path="/customerdashboard/:projectId" element={<CustomerDashBoard />} />
 
             </Route>
 
