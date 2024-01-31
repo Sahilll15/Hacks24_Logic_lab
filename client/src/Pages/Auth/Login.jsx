@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Login = () => {
 
@@ -21,10 +22,10 @@ const Login = () => {
   };
 
   const handleSignIn = () => {
-    alert('login')
+    // toast.success('login')
     login(email, password).then(() => {
       navigate('/');
-      alert('login succesfull')
+      toast.success('login succesfull')
     })
   };
 

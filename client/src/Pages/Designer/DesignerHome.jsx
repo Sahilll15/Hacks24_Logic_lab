@@ -5,6 +5,8 @@ import NewProjectForm from "../../Components/Designer/Home/NewProjectForm";
 import ImageCard from "../../Components/Cards/ImageCard";
 import { useProject } from "../../context/ProjectContext";
 import ProjectCard from "../../Components/Cards/ProjectCard";
+import { toast } from "react-toastify";
+
 
 const DesignerHome = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +51,7 @@ const DesignerHome = () => {
           {projects.map((project) => {
             return (
               <ProjectCard
+                projectId={project._id}
                 key={project._id}
                 projTitle={project.title}
                 custNo={project.homeOwnerPhone}
@@ -59,12 +62,6 @@ const DesignerHome = () => {
             );
           })}
           
-
-
-
-
-
-
         </div>
 
 

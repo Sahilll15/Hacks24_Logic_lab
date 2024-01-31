@@ -1,7 +1,10 @@
 import React from 'react';
 import Hall from "../../Assets/Images/Hall.png";
 
-const ProjectCard = ({ projTitle, custNo, custEmail, onClick, img, percentage }) => {
+import { useNavigate } from 'react-router-dom'
+const ProjectCard = ({ projectId, projTitle, custNo, custEmail, onClick, img, percentage }) => {
+
+    const navigate = useNavigate()
     return (
         
       <div className="antialiased font-sans ">

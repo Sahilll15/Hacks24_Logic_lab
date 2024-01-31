@@ -14,42 +14,39 @@ import ProjectUpdate from "./Pages/Designer/ProjectUpdate";
 import RoomStatus from "./Pages/Designer/RoomStatus";
 import ContractorHome from "./Pages/Contractor/ContractorHome";
 import ContractorTask from "./Pages/Contractor/ContractorTask";
-import CustomerHome from "./Pages/Customer/CustomerHome";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 
 
 const App = () => {
   return (
     <>
-    <Router>
-      <>
-        <Navbar />
+      <Router>
+        <>
+          <Navbar />
 
-        <ToastContainer />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/docs" element={<Document />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/designer" element={<DesignerHome />} />
-          <Route path="/project" element={<ProjectUpdate />} />
-          <Route path="/project/roomstatus" element={<RoomStatus />} />
-          <Route path="/contractor" element={<ContractorHome />} />
-          <Route path="/contractor/task" element={<ContractorTask />} />    
-          <Route path="/customer" element={<CustomerHome />} />        
-          {/* PRIVATE ROUTES BELOW THIS 
-           <Route path="/" element={<Private />}>
-            <Route path="/editcustomer" element={<CustomerEdiit />} />
-          </Route> */}
+          <ToastContainer />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Landing />} />
+            <Route element={<ProtectedRoutes />} >
+              <Route path="/docs" element={<Document />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/designer" element={<DesignerHome />} />
+              <Route path="/project/:projectId" element={<ProjectUpdate />} />
+              <Route path="/project/roomstatus" element={<RoomStatus />} />
+              <Route path="/contractor" element={<ContractorHome />} />
+              <Route path="/contractor/task" element={<ContractorTask />} />
 
-          
-        </Routes>
-     </>
-    </Router>
+            </Route>
 
-  </>
+          </Routes>
+        </>
+      </Router >
+
+    </>
   )
 }
 

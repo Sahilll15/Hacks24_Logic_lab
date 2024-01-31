@@ -1,6 +1,7 @@
 const { Room } = require('../models/room.models')
 const { Designer } = require('../models/designer.model')
 const { Project } = require('../models/project.models')
+const {Task} = require('../models/task.models')
 
 
 const createRoom = async (req, res) => {
@@ -99,11 +100,43 @@ const deleteRoom = async (req, res) => {
 }
 
 
+const getRoomById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const room = await Room.findById(id);
+        if (!room) {
+            return res.status(400).json({ error: 'Room not found' });
+        }
+        const tasks_ = [];
+        const percentOfCompletion = 0;
+        for(const x of room.tasks) {
+            const task = await Task.findById(x);
+            tasks_.push(task);
+
+            if(task.status === 'completed') {
+                percentOfCompletion += 100;
+            }
+        }
+
+        percentOfCompletion = percentOfCompletion / tasks_.length;
+
+
+
+        res.status(200).json({ room, tasks: tasks_, noOfTasks: tasks_.length, percentOfCompletion});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+}
+
+
+
 module.exports = {
     createRoom,
     getRoomsByProject,
     getRoomsByDesigner,
     updateRoom,
+    getRoomById,
     deleteRoom
 }
 
