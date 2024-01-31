@@ -29,7 +29,8 @@ const DesignerHome = () => {
     <div>
       <div className="min-h-screen bg-gray-100">
         <div>
-          <p className="ml-8 mt-8 text-2xl">
+          <p className="ml-8 text-2xl">
+            <br/>
             WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
           </p>
         </div>
@@ -58,7 +59,19 @@ const DesignerHome = () => {
             );
           })}
           
+
+
+
+
+
+
         </div>
+
+
+
+
+
+
       </div>
 
       {/* modal starts here */}

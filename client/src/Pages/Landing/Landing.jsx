@@ -1,5 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import IMG1 from "../../Assets/Images/land1.png"
+import IMG2 from "../../Assets/Images/land2.png"
+import IMG3 from "../../Assets/Images/Hall.png"
+import IMG4 from "../../Assets/Images/land3.png"
+
+
 
 const Landing = () => {
   return (
@@ -53,7 +59,7 @@ const Landing = () => {
               </div>
               <div className="w-full md:w-1/2">
                 <div className="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
-                  <img src="https://images.unsplash.com/photo-1498049860654-af1a5c566876?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
+                  <img src={IMG2} alt="" />
                 </div>
               </div>
             </div>
@@ -64,10 +70,7 @@ const Landing = () => {
           <div className="box-border flex flex-col items-center content-center px-8 mx-auto leading-6 text-black border-0 border-gray-300 border-solid md:flex-row max-w-7xl lg:px-16">
             {/* Image */}
             <div className="box-border relative w-full max-w-md px-4 mt-5 mb-4 -ml-5 text-center bg-no-repeat bg-contain border-solid md:ml-0 md:mt-0 md:max-w-none lg:mb-0 md:w-1/2 xl:pl-10">
-              <img
-                src="https://cdn.devdojo.com/images/december2020/productivity.png"
-                className="p-2 pl-6 pr-5 xl:pl-16 xl:pr-20 "
-              />
+              <img src={IMG4} alt="" />
             </div>
             {/* Content */}
             <div className="box-border order-first w-full text-black border-solid md:w-1/2 md:pl-10 md:order-none">
@@ -135,10 +138,7 @@ const Landing = () => {
             {/* End  Content */}
             {/* Image */}
             <div className="box-border relative w-full max-w-md px-4 mt-10 mb-4 text-center bg-no-repeat bg-contain border-solid md:mt-0 md:max-w-none lg:mb-0 md:w-1/2">
-              <img
-                src="https://cdn.devdojo.com/images/december2020/settings.png"
-                className="pl-4 sm:pr-10 xl:pl-10 lg:pr-32"
-              />
+              <img src={IMG3} alt="" />
             </div>
           </div>
         </section>

@@ -53,7 +53,7 @@ const RoomStatus = ({percentage}) => {
             </div>
           </div>
         </div>
-
+          <hr />
      <TaskCard/>
      
      <div>
