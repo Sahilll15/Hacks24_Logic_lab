@@ -1,33 +1,41 @@
 const { Task } = require('../models/task.models')
 const { Contractor } = require('../models/contractor.model');
 const { Room } = require('../models/room.models');
+
+
+
 const createTask = async (req, res) => {
-    const { projectId } = req.params;
-    const { roomId  } = req.params;
+    // const { projectId } = req.params;
+    const { roomId } = req.params;
     try {
-        const { title, description, priority } = req.body;
+        const { title, description, priority, budget } = req.body;
         const room = await Room.findById(roomId);
 
         if (!room) {
             return res.status(400).json({ error: 'Room not found' });
         }
 
-        const task = await Task.create({
+        const projectId = room.project;
 
+        const task = await Task.create({
             title,
             description,
             project: projectId,
             room: roomId,
+            budget,
             priority,
         });
 
 
         room.tasks.push(task._id);
 
+        room.budget += budget;
+
+
         await room.save();
 
 
-   
+
         res.status(200).json({ task });
     } catch (error) {
         console.log(error);
@@ -55,7 +63,8 @@ const getTasksByRoom = async (req, res) => {
         const tasks = await Task.find({
             room: roomId
         });
-        res.status(200).json({ tasks });
+        const percentageOfCompletion = tasks.filter(task => task.status === 'completed').length / tasks.length * 100;
+        res.status(200).json({ tasks, percentageOfCompletion });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
@@ -97,7 +106,7 @@ const assignContractor = async (req, res) => {
 
         await contractor.save();
 
-        
+
         res.status(200).json({ task });
 
     } catch (error) {
@@ -125,7 +134,7 @@ const deleteTask = async (req, res) => {
         await room.save();
 
         await contractor.save();
-       
+
 
         res.status(200).json({ task });
 
@@ -135,6 +144,7 @@ const deleteTask = async (req, res) => {
         res.status(500).json({ error: 'Something went wrong' });
     }
 }
+
 
 
 module.exports = {

@@ -1,11 +1,12 @@
 const { Room } = require('../models/room.models')
 const { Designer } = require('../models/designer.model')
 const { Project } = require('../models/project.models')
+const { Task } = require('../models/task.models')
 
 
 const createRoom = async (req, res) => {
     const { id: designerId } = req.user;
-    const {id: projectId } = req.params;
+    const { id: projectId } = req.params;
     try {
 
         const isDesigner = await Designer.findOne({ designer: designerId });
@@ -25,11 +26,10 @@ const createRoom = async (req, res) => {
         const room = await Room.create({
             title,
             description,
-            budget,
             project: projectId
         });
 
-        prj.budget += budget;
+        // prj.budget += budget;
         prj.rooms.push(room._id);
         await prj.save();
 
@@ -91,7 +91,7 @@ const deleteRoom = async (req, res) => {
         const project = await Project.findById(room.project);
         project.rooms.pull(room._id);
         await project.save();
-        res.status(200).json({ message: 'Room deleted successfully'});
+        res.status(200).json({ message: 'Room deleted successfully' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
@@ -99,11 +99,43 @@ const deleteRoom = async (req, res) => {
 }
 
 
+const getRoomById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const room = await Room.findById(id);
+        if (!room) {
+            return res.status(400).json({ error: 'Room not found' });
+        }
+        const tasks_ = [];
+        const percentOfCompletion = 0;
+        for (const x of room.tasks) {
+            const task = await Task.findById(x);
+            tasks_.push(task);
+
+            if (task.status === 'completed') {
+                percentOfCompletion += 100;
+            }
+        }
+
+        percentOfCompletion = percentOfCompletion / tasks_.length;
+
+
+
+        res.status(200).json({ room, tasks: tasks_, noOfTasks: tasks_.length, percentOfCompletion });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+}
+
+
+
 module.exports = {
     createRoom,
     getRoomsByProject,
     getRoomsByDesigner,
     updateRoom,
+    getRoomById,
     deleteRoom
 }
 

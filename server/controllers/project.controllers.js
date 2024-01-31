@@ -1,6 +1,8 @@
 const { Project } = require('../models/project.models')
 const { Designer } = require('../models/designer.model');
 const { invite_home_owner_to_project } = require('../utils/email');
+const { Room } = require('../models/room.models');
+const { Task } = require('../models/task.models');
 
 
 const createProject = async (req, res) => {
@@ -45,10 +47,39 @@ const createProject = async (req, res) => {
 const getProjectsByDesigner = async (req, res) => {
     const { id } = req.user;
     try {
+        const p = []
         const projects = await Project.find({
             designer: id
         });
-        res.status(200).json({ projects });
+        for(const x of projects){
+            let percentageOfCompletion = 0;
+            let totalTasks = 0;
+            let totalRooms = 0;
+            let totalBudget = 0;
+            for(const y of x.rooms){
+
+                const room = await Room.findById(y);
+                totalRooms++;
+                totalBudget += room.budget;
+                for(const z of room.tasks){
+                    const task = await Task.findById(z);
+                    
+                    if(task?.status === 'completed') percentageOfCompletion++;
+
+                    totalTasks++;
+
+                }
+            }
+
+            p.push({
+                project: x,
+                percentageOfCompletion: Math.round((percentageOfCompletion / totalTasks) * 100),
+                totalTasks,
+                totalRooms,
+                totalBudget
+            })
+        }
+        res.status(200).json({ projects: p });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
@@ -108,12 +139,51 @@ const deleteProject = async (req, res) => {
     }
 }
 
+const getProjectById = async (req, res) => {
+    const { id: projectId } = req.params;
+    const tasks_ = [];
+    const rooms = [];
+    try {
+        const project = await Project.findById(projectId);
+
+        for (const x of project.rooms) {
+            const room = await Room.findById(x);
+            let percentageOfCompletion = 0;
+            for (const y of room.tasks) {
+
+                const task = await Task.findById(y);
+                if (task) tasks_.push(task);
+                if (task?.status === 'completed') percentageOfCompletion++;
+
+
+            }
+
+            rooms.push({
+                room,
+                percentageOfCompletion: Math.round((percentageOfCompletion / room.tasks.length) * 100)
+            })
+
+          
+
+        }
+
+
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+        res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+}
 
 module.exports = {
     createProject,
     getProjectsByDesigner,
     getProjectsByOwner,
     updateProject,
-    deleteProject
+    deleteProject,
+    getProjectById
 }
 

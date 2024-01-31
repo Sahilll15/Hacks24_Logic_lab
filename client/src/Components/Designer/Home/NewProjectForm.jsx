@@ -3,6 +3,7 @@ import { BsPerson, BsCardText, BsTelephone, BsEnvelope } from "react-icons/bs";
 import BlueButton from "../../Buttons/BlueButton";
 import { useState } from "react";
 import { useProject } from "../../../context/ProjectContext";
+import { toast } from "react-toastify";
 
 const NewProjectForm = () => {
 
@@ -18,13 +19,33 @@ const NewProjectForm = () => {
     image: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    createProject(formData).then((response) => {
-      alert('project created succesfully')
-    });
+  
+    const payload = {
+      title: formData.title,
+      description: formData.description,
+      homeOwnerEmail: formData.homeOwnerEmail,
+      homeOwnerPhone: formData.homeOwnerPhone,
+      image: formData.image,
+    };
+  
+    try {
+      const res = await createProject(payload);
+  
+      console.log(res);
+  
+      if (res.status === 200) { // Assuming 201 is the status for a successful creation
+        toast.success("Project created successfully!");
+      } else {
+        toast.error("Failed to create project. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating project:", error);
+      toast.error("An error occurred while creating the project. Please try again later.");
+    }
   };
+  
 
   const handleChange = (e) => {
     setFormData({
@@ -47,6 +68,7 @@ const NewProjectForm = () => {
             type="text"
             id="title"
             name="title"
+            onChange={handleChange}
             className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:border-blue-500"
             required
           />
@@ -58,6 +80,7 @@ const NewProjectForm = () => {
           <textarea
             id="description"
             name="description"
+
             className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:border-blue-500"
             required
             onChange={handleChange}

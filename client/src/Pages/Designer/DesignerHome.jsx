@@ -5,6 +5,7 @@ import NewProjectForm from "../../Components/Designer/Home/NewProjectForm";
 import ImageCard from "../../Components/Cards/ImageCard";
 import { useProject } from "../../context/ProjectContext";
 import ProjectCard from "../../Components/Cards/ProjectCard";
+import { toast } from "react-toastify";
 
 
 const DesignerHome = () => {
@@ -22,15 +23,16 @@ const DesignerHome = () => {
 
   useEffect(() => {
     getProjectsByDesigner().then((res) => {
-      console.log(res)
-    })
-  }, [])
+      console.log(res);
+    });
+  }, []);
 
   return (
     <div>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-gray-100">
         <div>
-          <p className="ml-8 mt-8 text-2xl">
+          <p className="ml-8 text-2xl">
+            <br/>
             WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
           </p>
         </div>
@@ -45,25 +47,33 @@ const DesignerHome = () => {
             </div>
           </div>
         </center>
-        <div className="flex m-16 gap-6">
-          {
-            projects.map((project) => {
-              return (
-                <ProjectCard
-                  key={project._id}
-                  projTitle={project.title}
-                  custNo={project.homeOwnerPhone}
-                  custEmail={project.homeOwnerEmail}
-                  img={project.image}
-                  percentage={project.progress}
-                />
-              )
-            })
-          }
+        <div className="flex  flex-wrap gap-6 ml-12 mt-12">
+          {projects.map((project) => {
+            return (
+              <ProjectCard
+                projectId={project.project._id}
+                key={project.project._id}
+                projTitle={project.project.title}
+                custNo={project.project.homeOwnerPhone}
+                custEmail={project.project.homeOwnerEmail}
+                img={project.project.image}
+                percentage={project.percentageOfCompletion}
+                noOfTasks={project.totalTasks}
+                noOfRooms={project.totalRooms}
+                totalBudget={project.totalBudget}
 
+              />
+            );
+          })}
+          
         </div>
-      </div>
 
+
+
+
+
+
+      </div>
 
       {/* modal starts here */}
       <Transition appear show={isOpen} as={React.Fragment}>
@@ -106,12 +116,13 @@ const DesignerHome = () => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  <p className="text-right cursor-pointer" onClick={closeModal}> X</p>
+                  <p className="text-right cursor-pointer" onClick={closeModal}>
+                    {" "}
+                    X
+                  </p>
                 </Dialog.Title>
 
                 <NewProjectForm />
-
-
               </div>
             </Transition.Child>
           </div>
