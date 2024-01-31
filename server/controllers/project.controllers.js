@@ -28,7 +28,7 @@ const createProject = async (req, res) => {
             homeOwnerName,
             homeOwnerEmail,
             homeOwnerPhone,
-            image: image || "https://static.turbosquid.com/Preview/2014/05/21__03_48_03/dummy_6.jpg8ed0eb08-e208-48e0-a1ae-9dc0805bcc6cZoom.jpg",
+            image: image? image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fhousing.com%2Fnews%2F3d-home-design-definition-and-how-it-can-be-created%2F&psig=AOvVaw3Incwf0tgz-ZN5omjtBdgI&ust=1706794246691000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCJit_pTeh4QDFQAAAAAdAAAAABAJ",
             password: randomPwd
         });
 

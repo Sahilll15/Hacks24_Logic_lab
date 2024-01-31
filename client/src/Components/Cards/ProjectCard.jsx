@@ -22,6 +22,19 @@ const ProjectCard = ({ projectId, projTitle, custNo, custEmail, onClick, totalBu
                 <p className="text-gray-700">{custNo}</p>
                 <p className="text-gray-700">{custEmail}</p>
               </div>
+              <div className="flex mb-2 items-center justify-between">
+                            <div>
+                                <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white bg-green-500">
+                                    Progress
+                                </span>
+                            </div>
+                            <div className="text-right">
+                                <span className="text-xs font-semibold inline-block text-green-600">
+                                    {percentage || 0}%
+                                </span>
+                            </div>
+                        </div>
+
               <div className="flex p-4 border-t border-gray-300 text-gray-700">
                 <div className="flex-1 inline-flex items-center">
                   <svg className="h-6 w-6 text-gray-600 fill-current mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
