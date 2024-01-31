@@ -3,7 +3,7 @@ import Hall from "../../Assets/Images/Hall.png";
 
 const ProjectCard = ({ projTitle, custNo, custEmail, onClick, img, percentage }) => {
     return (
-        <div>
+        <div className='mt-10'>
             <div className="relative flex flex-col w-80 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
                 <div className="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
                     <img src={img} alt="hall image" />

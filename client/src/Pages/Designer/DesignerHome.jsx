@@ -5,6 +5,7 @@ import NewProjectForm from "../../Components/Designer/Home/NewProjectForm";
 import ImageCard from "../../Components/Cards/ImageCard";
 import { useProject } from "../../context/ProjectContext";
 import ProjectCard from "../../Components/Cards/ProjectCard";
+import PieChartComponent from "../../Components/Cards/PieChart";
 
 
 const DesignerHome = () => {
@@ -45,7 +46,7 @@ const DesignerHome = () => {
             </div>
           </div>
         </center>
-        <div className="flex m-16 gap-6">
+        <div className="flex m-16 gap-6 flex-wrap">
           {
             projects.map((project) => {
               return (
@@ -60,6 +61,8 @@ const DesignerHome = () => {
               )
             })
           }
+
+          {/* <PieChartComponent /> */}
 
         </div>
       </div>

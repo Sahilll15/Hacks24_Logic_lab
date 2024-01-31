@@ -2,8 +2,7 @@ const { User } = require('../models/user.model');
 const { Designer } = require('../models/designer.model');
 const { Owner } = require('../models/owner.model');
 const bcrypt = require('bcrypt');
-const {Owner} = require('../models/owner.model');
-const {Contractor} = require('../models/contractor.model');
+const { Contractor } = require('../models/contractor.model');
 const jwt = require('jsonwebtoken');
 
 
