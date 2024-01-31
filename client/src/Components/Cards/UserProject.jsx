@@ -2,7 +2,7 @@ import React from "react";
 import Hall from "../../Assets/Images/Hall.png";
 
 import { useNavigate } from "react-router-dom";
-const ProjectCard = ({
+const UserProject = ({
     projectId,
     projTitle,
     custNo,
@@ -19,7 +19,7 @@ const ProjectCard = ({
     const navigate = useNavigate();
     return (
         <div
-            onClick={() => navigate(`/project/${projectId}`)}
+            // onClick={() => navigate(`/project/${projectId}`)}
             className="antialiased font-sans "
         >
             <div className="">
@@ -112,4 +112,4 @@ const ProjectCard = ({
     );
 };
 
-export default ProjectCard;
+export default UserProject;
