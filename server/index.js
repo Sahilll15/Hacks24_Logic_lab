@@ -1,4 +1,5 @@
 const express = require('express');
+const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 require('dotenv').config()
@@ -24,6 +25,9 @@ app.listen(process.env.PORT, () => {
 
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log('DB Connected'));
+
+
+app.use('/api/v1/auth', authRoutes);
 
 
 // app.post('/api/create-payment-session', async (req, res) => {
