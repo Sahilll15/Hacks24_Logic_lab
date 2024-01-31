@@ -12,6 +12,8 @@ import Profile from "./Pages/Profile/Profile";
 import DesignerHome from "./Pages/Designer/DesignerHome";
 import ProjectUpdate from "./Pages/Designer/ProjectUpdate";
 import RoomStatus from "./Pages/Designer/RoomStatus";
+import ContractorHome from "./Pages/Contractor/ContractorHome";
+import ContractorTask from "./Pages/Contractor/ContractorTask";
 
 
 
@@ -33,7 +35,8 @@ const App = () => {
           <Route path="/designer" element={<DesignerHome />} />
           <Route path="/project" element={<ProjectUpdate />} />
           <Route path="/project/roomstatus" element={<RoomStatus />} />
-
+          <Route path="/contractor" element={<ContractorHome />} />
+          <Route path="/contractor/task" element={<ContractorTask />} />            
           {/* PRIVATE ROUTES BELOW THIS 
            <Route path="/" element={<Private />}>
             <Route path="/editcustomer" element={<CustomerEdiit />} />

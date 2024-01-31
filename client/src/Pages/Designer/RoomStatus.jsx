@@ -53,7 +53,9 @@ const RoomStatus = ({percentage}) => {
             </div>
           </div>
         </div>
+
      <TaskCard/>
+     
      <div>
      {isModalOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
