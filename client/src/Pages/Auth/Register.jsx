@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const { register } = useAuth();
@@ -33,7 +34,7 @@ const Register = () => {
 
   const handleSubmit = () => {
     if (!email || !password || !phoneNumber || !name || !role) {
-      alert('Please fill all the fields')
+      toast.error('Please fill all the fields')
       return;
     }
 
@@ -45,7 +46,7 @@ const Register = () => {
       role: role
     })
     register(name, email, role, password, phoneNumber).then((response) => {
-      alert(response.data.message)
+      toast.success(response.data.message)
     })
 
   };
