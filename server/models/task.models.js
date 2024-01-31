@@ -25,45 +25,22 @@ const taskModel = new mongoose.Schema({
         required: true
     },
     room: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Room'
     },
     project: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        // required: true,
+        ref: 'Project',
         required: true
     },
     contractor: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Contractor',
+        // required: true``
     },
-    homeOwner: {
-        type: String,
-        required: true
-    },
-    contractorName: {
-        type: String,
-        required: true
-    },
-    contractorEmail: {
-        type: String,
-        required: true
-    },
-    contractorPhone: {
-        type: Number,
-        required: true
-    },
-    homeOwnerName: {
-        type: String,
-        required: true
-    },
-    homeOwnerEmail: {
-        type: String,
-        required: true
-    },
-    homeOwnerPhone: {
-        type: Number,
-        required: true
-    },
+
     contractorAcceptedTask: {
         type: Boolean,
         default: false
