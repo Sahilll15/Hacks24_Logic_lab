@@ -61,6 +61,7 @@ const DesignerHome = () => {
                 noOfTasks={project.totalTasks}
                 noOfRooms={project.totalRooms}
                 totalBudget={project.totalBudget}
+                
 
               />
             );

@@ -13,41 +13,77 @@ const Chat = () => {
   const { pId } = useParams();
   const { user, socket } = useAuth();
 
-  // useEffect(()=>{
+  useEffect(()=>{
 
-  //   const getMessages = async () => {
-  //     try{
-  //       const res = await fetch()
-  //     }catch(err){
+    const getMessages = async () => {
+      try{
+        const res = await fetch(`http://localhost:4000/api/v1/message/get/${pId}`,{
+          method: "GET",
+          headers: {
+            'Content-Type': "application/json",
+            Authorization: `Bearer ${localStorage.getItem('auth')}`
+          }
+        });
 
-  //     }
-  //   }
-  // },[])
+        if(res.status === 200){
+          const data = await res.json();
+          console.log(data.messages)
+          setMessages(data.messages)
+        }
+      }catch(err){
+        console.log(err)
+        alert("Something went wrong")
+      }
+    }
+
+    getMessages();
+  },[])
 
   useEffect(() => {
+    if(!user) return;
     socket.emit('joinRoom', { chatId: pId, user: user.name, userId: user._id })
-  }, [])
+  }, [socket, user])
 
   useEffect(() => {
+    if(!user) return;
+
     socket.on("joinRoom", (data) => {
       toast.success(data.message)
     })
 
     socket.on("message", (data) => {
-      setMessages([...messages, data])
+      setMessages((prev) => [...prev, data])
     });
 
     return () => {
-      socket.off("joinRoom")
+      socket.off("joinRoom");
+      socket.off("message")
     }
   }, [])
 
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
+    const payload = {
+     content: message,
+     chat: pId
+    }
+   
     socket.emit("sendMessage", { chatId: pId, message, user: user.name, userId: user._id })
     setMessage("");
-    setMessages([...messages, { message, user: user.name, userId: user._id }])
+    setMessages((prev) => [...prev, { message, user: user.name, userId: user._id }])
+    const res = await fetch('http://localhost:4000/api/v1/message/create',{
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json",
+        Authorization: `Bearer ${localStorage.getItem('auth')}`
+      },
+      body: JSON.stringify(payload)
+    })
+
+    if(res.status === 200){
+      toast.success("message sent")
+    }
   }
 
   return (
@@ -100,7 +136,7 @@ const Chat = () => {
               <div className="grid grid-cols-12 gap-y-2">
                 {messages?.map((m) => (
                   <>
-                    {m.userId !== user._id ? (<>
+                    {m.user !== user.name ? (<>
                       <div className="col-start-1 col-end-8 p-3 rounded-lg">
                         <div className="flex flex-row items-center">
                           <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">

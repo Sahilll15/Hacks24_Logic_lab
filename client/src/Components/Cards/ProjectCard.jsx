@@ -19,7 +19,7 @@ const ProjectCard = ({
     const navigate = useNavigate();
     return (
         <div
-            onClick={() => navigate(`/project/${projectId}`)}
+            
             className="antialiased font-sans "
         >
             <div className="">
@@ -92,6 +92,8 @@ const ProjectCard = ({
                                         Tasks
                                     </p>
                                 </div>
+                                <button className="btn bg-green-500 rounded p-2" onClick={() => navigate(`/chat/${projectId}`)}>Chat</button>
+                                <button className="btn bg-blue-500 rounded mx-2 p-2" onClick={() => navigate(`/project/${projectId}`)}>View</button>
                             </div>
                             {/* <div className="px-4 pt-3 pb-4 border-t border-gray-300 bg-gray-100">
                 <div className="text-xs uppercase font-bold text-gray-600 tracking-wide">Realtor</div>
