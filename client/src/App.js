@@ -9,6 +9,8 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import Profile from "./Pages/Profile/Profile";
+import DesignerHome from "./Pages/Designer/DesignerHome";
+
 
 const App = () => {
   return (
@@ -25,8 +27,10 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
-          {/* PRIVATE ROUTES BELOW THIS */}
-          {/* <Route path="/" element={<Private />}>
+          <Route path="/designer" element={<DesignerHome />} />
+
+          {/* PRIVATE ROUTES BELOW THIS 
+           <Route path="/" element={<Private />}>
             <Route path="/editcustomer" element={<CustomerEdiit />} />
           </Route> */}
 
@@ -34,6 +38,7 @@ const App = () => {
         </Routes>
      </>
     </Router>
+
   </>
   )
 }
