@@ -9,9 +9,10 @@ const ProjectProvider = ({ children }) => {
     const [projects, setProjects] = useState([]);
 
 
-    const createProject = async (name, description, hasOwnerEmail, hasOwnerPhone) => {
+    const createProject = async (payload) => {
         try {
-            const response = await axios.post('http://localhost:4000/api/v1/project/create', { name, description, hasOwnerEmail, hasOwnerPhone }, {
+            const { title, description, homeOwnerEmail, homeOwnerPhone } = payload;
+            const response = await axios.post('http://localhost:4000/api/v1/project/create', { title, description, homeOwnerEmail, homeOwnerPhone }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('auth')}`
                 }

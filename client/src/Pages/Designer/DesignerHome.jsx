@@ -44,7 +44,7 @@ const DesignerHome = () => {
             </div>
           </div>
         </center>
-        <div className="flex m-16 gap-6">
+        <div className="flex  flex-wrap gap-6 ml-12 mt-12">
           {projects.map((project) => {
             return (
               <ProjectCard
@@ -57,14 +57,7 @@ const DesignerHome = () => {
               />
             );
           })}
-          <ProjectCard
-            key="1122"
-            projTitle="fedfds"
-            custNo="55"
-            custEmail="fdsfsddfs"
-            img="https://avatars.githubusercontent.com/u/121731399?v=4"
-            percentage="50"
-          />
+          
         </div>
       </div>
 

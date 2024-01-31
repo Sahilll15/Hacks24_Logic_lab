@@ -21,9 +21,19 @@ const NewProjectForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    createProject(formData).then((response) => {
-      alert('project created succesfully')
-    });
+    console.log(formData)
+    const payload = {
+      title: formData.title,
+      description: formData.description,
+      homeOwnerEmail: formData.homeOwnerEmail,
+      homeOwnerPhone: formData.homeOwnerPhone,
+      image: formData.image,
+    }
+
+    createProject(payload).then((res) => {
+      console.log(res)
+    }
+    )
   };
 
   const handleChange = (e) => {
@@ -47,6 +57,7 @@ const NewProjectForm = () => {
             type="text"
             id="title"
             name="title"
+            onChange={handleChange}
             className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:border-blue-500"
             required
           />
@@ -58,6 +69,7 @@ const NewProjectForm = () => {
           <textarea
             id="description"
             name="description"
+
             className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:border-blue-500"
             required
             onChange={handleChange}
