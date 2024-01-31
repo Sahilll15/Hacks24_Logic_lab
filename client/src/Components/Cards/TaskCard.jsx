@@ -36,7 +36,7 @@ const TaskCard = ({ tasks }) => {
             <table className="rounded-table w-full">
               <thead>
                 <tr className="">
-                  <th className="border-r-2 p-2" style={{ width: "15%" }}>Tiling Work</th>
+                  <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.title}</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task?.taskAssigned || 'No Contractor'}</th>
                   <th className="border-r-2 p-2 bg-green-500" style={{ width: "10%" }}>
                     <select className="appearance-none bg-transparent border-none w-full text-white focus:outline-none">
