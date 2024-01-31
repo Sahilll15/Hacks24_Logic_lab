@@ -3,7 +3,7 @@ const { Designer } = require('../models/designer.model');
 const { invite_home_owner_to_project } = require('../utils/email');
 const { Room } = require('../models/room.models');
 const { Task } = require('../models/task.models');
-
+const {Owner} = require('../models/owner.model')
 
 const createProject = async (req, res) => {
     const { id: designerId } = req.user;
@@ -34,6 +34,15 @@ const createProject = async (req, res) => {
 
         isDesigner.projects.push(project._id);
         await isDesigner.save();
+
+        const doesOwnerExist = await Owner.findOne({ email: homeOwnerEmail });
+
+        if(doesOwnerExist){
+            doesOwnerExist.projects.push(project._id);
+            await doesOwnerExist.save();
+            project.Owner = doesOwnerExist._id
+            await project.save();
+        }
 
         await invite_home_owner_to_project(homeOwnerEmail, title, randomPwd, isDesigner.name, homeOwnerName, project._id);
 

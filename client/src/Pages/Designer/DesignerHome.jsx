@@ -23,9 +23,9 @@ const DesignerHome = () => {
 
   useEffect(() => {
     getProjectsByDesigner().then((res) => {
-      console.log(res);
+     
     });
-  }, []);
+  }, [projects]);
 
   return (
     <div>
@@ -122,7 +122,7 @@ const DesignerHome = () => {
                   </p>
                 </Dialog.Title>
 
-                <NewProjectForm />
+                <NewProjectForm closeModal={closeModal} />
 
                 
               </div>

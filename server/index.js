@@ -5,6 +5,7 @@ const roomRoutes = require('./routes/room.routes')
 const taskRoutes = require('./routes/task.routes')
 const messageRoutes = require('./routes/message.routes')
 const chatRoutes = require('./routes/chat.routes')
+const ownerRoutes = require('./routes/owner.routes')
 const { Server } = require('socket.io');
 const socketCtrl = require('./controllers/socket.controller')
 
@@ -51,4 +52,5 @@ app.use('/api/v1/room', roomRoutes);
 app.use('/api/v1/task', taskRoutes);
 app.use('/api/v1/message', messageRoutes);
 app.use('/api/v1/chat', chatRoutes);
+app.use('/api/v1/owner', ownerRoutes);
 

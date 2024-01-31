@@ -1,11 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiMailLine, RiLockPasswordLine } from 'react-icons/ri';
 import UserProject from "../../Components/Cards/UserProject";
 
 
 const CustomerHome = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [customerPrj, setCustomersPrj] = useState([]);
 
+  useEffect(() => {
+    const getUserProjects = async () => {
+      try{
+        const response = await fetch("http://localhost:4000/api/v1/owner", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem('auth')}`
+          }
+        });
+        const data = await response.json();
+        setCustomersPrj(data.projects)
+      }catch(err){
+        console.log(err);
+      }
+    }
+    getUserProjects();
+  },[localStorage.getItem('auth')]);
   const openModal = () => {
     setModalOpen(true);
   };
@@ -50,7 +69,18 @@ const CustomerHome = () => {
           </section>
         </section>
        
-       <UserProject/>
+       {customerPrj?.map((p) => (
+        <UserProject 
+        projectId = {p.project_id}
+        projTitle = {p.project.title}
+        custNo = {p.project.homeOwnerPhone}
+        custEmai = {p.project.homeOwnerEmail}
+        totalBudget = {p.totalBudget}
+        totalTasks = {p.totalTasks}
+        totalRooms = {p.totalRooms}
+        percentage={p.percentageOfCompletion}
+        />
+       ))}
 
       </div>
       {isModalOpen && (
