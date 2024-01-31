@@ -2,12 +2,17 @@ const mongoose = require('mongoose');
 
 const DesignerSchema = mongoose.Schema({
 
-    name:{
+    name: {
         type: String,
         required: true
     },
 
-    email:{
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    phone: {
         type: String,
         required: true,
         unique: true
@@ -19,17 +24,17 @@ const DesignerSchema = mongoose.Schema({
         unique: true
     },
 
-    desginer:{
+    designer:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
 
-    clients:[{
+    clients: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }],
 
-    projects:[{
+    projects: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project',
     }],
@@ -38,4 +43,6 @@ const DesignerSchema = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Designer', DesignerSchema);
+const Designer =  mongoose.model('Designer', DesignerSchema);
+
+module.exports = { Designer };
