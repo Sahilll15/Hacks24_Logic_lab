@@ -31,21 +31,14 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Landing />} />
             <Route element={<ProtectedRoutes />} >
-
               <Route path="/docs" element={<Document />} />
               <Route path="/dashboard" element={<Dashboard />} />
-
               <Route path="/profile" element={<Profile />} />
               <Route path="/designer" element={<DesignerHome />} />
-              <Route path="/project" element={<ProjectUpdate />} />
+              <Route path="/project/:projectId" element={<ProjectUpdate />} />
               <Route path="/project/roomstatus" element={<RoomStatus />} />
               <Route path="/contractor" element={<ContractorHome />} />
               <Route path="/contractor/task" element={<ContractorTask />} />
-              {/* PRIVATE ROUTES BELOW THIS 
-           <Route path="/" element={<Private />}>
-            <Route path="/editcustomer" element={<CustomerEdiit />} />
-          </Route> */}
-
 
             </Route>
 

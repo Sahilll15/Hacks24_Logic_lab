@@ -118,19 +118,26 @@ const getProjectById = async (req, res) => {
     try {
         const project = await Project.findById(projectId);
 
-        for(const x of project.rooms) {
+        for (const x of project.rooms) {
             const room = await Room.findById(x);
-            if(room) rooms.push(room);
-            for(const y of room.tasks) {
+            const percentageOfCompletion = 0;
+            for (const y of room.tasks) {
+
                 const task = await Task.findById(y);
-                if(task) tasks_.push(task);
+                if (task) tasks_.push(task);
+                if (task?.status === 'completed') percentageOfCompletion++;
+
+                rooms.push({
+                    room,
+                    percentageOfCompletion: percentageOfCompletion / room.tasks.length * 100
+                })
             }
 
         }
-        if(!project) {
+        if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }
-        res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length});
+        res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ImageCard = ({ projTitle, custNo, custEmail, onClick, img }) => {
+const ImageCard = ({ projectId, projTitle, custNo, custEmail, onClick, img }) => {
   return (
     <div>
       <div className="product-card w-[350px] rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
