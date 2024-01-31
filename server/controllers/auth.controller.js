@@ -65,10 +65,9 @@ const login = async (req, res) => {
 
         let designer = null;
         console.log(doesUserExists.role);
-        if (doesUserExists.role == 'designer') {
+        if (doesUserExists.role === 'designer') {
 
             designer = await Designer.findOne({ designer: doesUserExists._id });
-
         }
 
         const payload = {

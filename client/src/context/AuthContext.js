@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:4000/api/v1/auth/login', { email, password });
             setUser(response.data.user);
+            localStorage.setItem('auth', response.data.token)
             setToken(response.data.token);
             return response
         } catch (error) {
@@ -19,7 +20,6 @@ const AuthProvider = ({ children }) => {
             return error.response;
         }
     };
-
 
     const register = async (name, email, role, password, phoneNumber) => {
         try {
