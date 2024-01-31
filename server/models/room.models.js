@@ -29,6 +29,11 @@ const roomModel = new mongoose.Schema({
         type: Number,
         required: true
     },
+    project: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Project'
+    }
 
 
 });
