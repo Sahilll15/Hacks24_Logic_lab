@@ -1,14 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CiImageOn } from 'react-icons/ci';
 import { IoIosArrowDropdown } from "react-icons/io";
 import axios from 'axios'
 
 
 const TaskCard = ({ tasks }) => {
-  const optionsCompleted = ['Completed', 'In Progress'];
-  const optionsHigh = ['Low', 'Medium', 'High'];
+ 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const [selectedOption, setSelectedOption] = useState(''); // State to hold selected option
 
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value); // Update selected option when dropdown changes
+  };
 
   // const updateTask = async () => {
   //   try {
@@ -59,32 +69,14 @@ const TaskCard = ({ tasks }) => {
       </div>
       {
         tasks.map((task) => (
-
           <div className="task-card bg-indigo-400 text-white overflow-hidden rounded-lg m-2" key={task._id}>
             <table className="rounded-table w-full">
               <thead>
                 <tr className="">
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.title}</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task?.taskAssigned || 'No Contractor'}</th>
-                  <th className="border-r-2 p-2 bg-green-500" style={{ width: "10%" }}>
-                    <select className="appearance-none bg-transparent border-none w-full text-white focus:outline-none">
-                      <IoIosArrowDropdown />
-                      <option key={task.status} defaultValue={task.status} className='bg-gray-700' value={task.status}>{task.status}</option>
-
-                      {optionsCompleted.map((option) => (
-                        <option key={option} className='bg-gray-700' value={option}
-                        >{option}</option>
-                      ))}
-                    </select>
-                  </th>
-                  <th className="border-r-2  bg-red-300" style={{ width: "10%" }}>
-                    <select className="appearance-none bg-transparent border-none w-full text-white p-2 focus:outline-none">
-                      <option key={task.priority} defaultValue={task.priority} className='bg-gray-700' value={task.priority}>{task.priority}</option>
-                      {optionsHigh.map((option) => (
-                        <option key={option} defaultValue={task.priority} className='bg-gray-700' value={option}>{option}</option>
-                      ))}
-                    </select>
-                  </th>
+                  <th className="border-r-2 p-2 bg-green-500" style={{ width: "10%" }} onClick={openModal} >{task.status}</th>
+                  <th className="border-r-2 p-2 bg-red-300" style={{ width: "10%" }}>{task.priority}</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>69/69/69</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.budget || "Budget Not decided"}</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>1200</th>
@@ -93,9 +85,43 @@ const TaskCard = ({ tasks }) => {
               </thead>
             </table>
           </div>
-
         ))
       }
+
+{isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded- w-80">
+            <p onClick={closeModal}>close</p>
+
+            <form  className="my-form bg-gray-200 p-4 rounded-md">
+      <div className="mb-4">
+        <label htmlFor="priority" className="block text-sm font-medium text-gray-600">
+          Select Priority:
+        </label>
+        <select
+          id="priority"
+          name="priority"
+          value={selectedOption}
+          onChange={handleSelectChange}
+          className="form-select mt-1 p-2 border rounded-md w-full"
+        >
+          <option value="" disabled>Select Priority</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+
+      <div>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+          Submit
+        </button>
+      </div>
+    </form>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 };
