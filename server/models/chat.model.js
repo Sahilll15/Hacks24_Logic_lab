@@ -7,16 +7,6 @@ const chatSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project'
     },
-    content: {
-        type: String,
-        required: true,
-        maxlength: 500
-    },
-
-    sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
 
     members: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -27,6 +17,11 @@ const chatSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Message'
     },
+
+    messages: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Message'
+    }]
 
 
 }, { timestamps: true });

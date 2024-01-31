@@ -8,16 +8,18 @@ const createMessage = async (req, res) => {
         if (!content || !chat) {
             return res.status(400).json({ error: "Please enter all the fields" });
         }
-        const chatI = await Chat.findById(chat);
+        const chatI = await Chat.findOne({projectId: chat});
+
         if (!chatI) {
             return res.status(400).json({ error: "No such community exists" });
         }
-        const message_ = await Message.create({ content, chatId: chat, sender: req.user.id });
+        const message_ = await Message.create({ content, chatId: chat._id, sender: req.user.id });
         chatI.messages.push(message_._id);
         chatI.latestMessage = message_._id;
         await chatI.save();
         res.status(200).json({ message_, message: "Message sent successfully" });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: error.message });
     }
 }
@@ -28,15 +30,23 @@ const getCommunityMessages = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const community = await Chat.findById(id).populate('messages');
+        const community = await Chat.findOne({projectId: id}).populate('messages');
         if (!community) {
             return res.status(400).json({ error: "No such community exists" });
         }
         for (const message of community.messages) {
             await message.populate('sender', 'name')
         }
-
-        res.status(200).json({ messages: community.messages });
+        const msg = community.messages;
+        const nsg = [];
+        for(const m of msg){
+            nsg.push({
+                message: m.content,
+                user: m.sender.name,
+                userId: m.sender._id
+            })
+        }
+        res.status(200).json({ messages: nsg });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
