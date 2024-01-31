@@ -1,5 +1,5 @@
 const { Room } = require('../models/room.models')
-const { Designer } = require('../models/designer.models')
+const { Designer } = require('../models/designer.model')
 
 
 const createRoom = async (req, res) => {
