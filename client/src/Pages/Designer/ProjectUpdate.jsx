@@ -2,13 +2,21 @@ import React, { useEffect, useState } from "react";
 import TopCard from "../../Components/Cards/TopCard";
 import { FaUser, FaEnvelope } from "react-icons/fa";
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+
 
 
 const ProjectUpdate = () => {
 
   const [rooms, setRooms] = useState([])
   const { projectId } = useParams();
+
+  const navigate = useNavigate();
+
+
+
+
+
 
   const fetchRoomsById = async () => {
     try {
@@ -19,11 +27,17 @@ const ProjectUpdate = () => {
       })
 
       console.log(response)
+      console.log(response.data)
       setRooms(response.data.rooms)
     } catch (error) {
       console.log(error)
     }
   }
+
+
+
+
+
 
 
   useEffect(() => {
@@ -57,10 +71,34 @@ const ProjectUpdate = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+
+  const addRooms = async (req, res) => {
+    try {
+      const response = await axios.post(`http://localhost:4000/api/v1/room/create/${projectId}`, {
+        title: formData.roomName,
+        description: formData.description,
+        priority: formData.priority
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('auth')}`
+        }
+      })
+
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Add your form submission logic here using the formData state
     console.log("Form submitted:", formData);
+
+    await addRooms().then(() => {
+      fetchRoomsById()
+      closeModal()
+    })
   };
 
 
@@ -90,7 +128,7 @@ const ProjectUpdate = () => {
       >
         +
       </button>
-      <button>fdsf</button>
+
 
       {/* Modal */}
       {isModalOpen && (
@@ -152,6 +190,7 @@ const ProjectUpdate = () => {
 
               <div className="mt-6">
                 <button
+                  onClick={handleSubmit}
                   type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue"
                 >
