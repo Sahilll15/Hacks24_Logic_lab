@@ -55,7 +55,8 @@ const getTasksByRoom = async (req, res) => {
         const tasks = await Task.find({
             room: roomId
         });
-        res.status(200).json({ tasks });
+        const percentageOfCompletion = tasks.filter(task => task.status === 'completed').length / tasks.length * 100;
+        res.status(200).json({ tasks, percentageOfCompletion });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
@@ -135,6 +136,7 @@ const deleteTask = async (req, res) => {
         res.status(500).json({ error: 'Something went wrong' });
     }
 }
+
 
 
 module.exports = {

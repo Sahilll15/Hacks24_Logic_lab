@@ -1,6 +1,8 @@
 const { Project } = require('../models/project.models')
 const { Designer } = require('../models/designer.model');
 const { invite_home_owner_to_project } = require('../utils/email');
+const { Room } = require('../models/room.models');
+const { Task } = require('../models/task.models');
 
 
 const createProject = async (req, res) => {
@@ -109,11 +111,38 @@ const deleteProject = async (req, res) => {
 }
 
 
+const getProjectById = async (req, res) => {
+    const { id: projectId } = req.params;
+    const tasks_ = [];
+    const rooms = [];
+    try {
+        const project = await Project.findById(projectId);
+
+        for(const x of project.rooms) {
+            const room = await Room.findById(x);
+            if(room) rooms.push(room);
+            for(const y of room.tasks) {
+                const task = await Task.findById(y);
+                if(task) tasks_.push(task);
+            }
+
+        }
+        if(!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+        res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+}
+
 module.exports = {
     createProject,
     getProjectsByDesigner,
     getProjectsByOwner,
     updateProject,
-    deleteProject
+    deleteProject,
+    getProjectById
 }
 
