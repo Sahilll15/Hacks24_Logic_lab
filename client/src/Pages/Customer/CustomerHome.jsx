@@ -16,7 +16,7 @@ const CustomerHome = () => {
 
     return (
         <div>
-            <div className="min-h-screen antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
+            <div className="min-h-screen bg-white">
                 <div>
                     <p className="ml-8 mt-8 text-2xl text-center">
                         WELCOME, <b className="text-orange-400">CUSTOMER NAME</b>
