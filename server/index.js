@@ -4,6 +4,8 @@ const app = express();
 require('dotenv').config()
 const cors = require('cors')
 
+const mongoose = require('mongoose');
+
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.use(cors())
@@ -18,6 +20,11 @@ app.get('/', (req, res) => {
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 })
+
+
+mongoose.connect(process.env.MONGO_URI, {
+}).then(() => console.log('DB Connected'));
+
 
 // app.post('/api/create-payment-session', async (req, res) => {
 //     const { product } = req.body;
