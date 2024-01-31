@@ -1,6 +1,10 @@
 import React from 'react'
+import { useNavigate, useParams } from 'react-router'
+
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const {pId} = useParams();
   return (
    <div>
   <div className="flex-grow text-gray-800">
@@ -81,7 +85,7 @@ const Dashboard = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <div>
+          <div onClick={() => navigate(`/customer/chat/${pId}`)}>
             <span className="block text-2xl font-bold">9</span>
             <span className="block text-gray-500">Projects Left</span>
           </div>

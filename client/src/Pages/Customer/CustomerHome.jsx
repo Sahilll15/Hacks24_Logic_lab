@@ -71,7 +71,7 @@ const CustomerHome = () => {
        
        {customerPrj?.map((p) => (
         <UserProject 
-        projectId = {p.project_id}
+        projectId = {p.project._id}
         projTitle = {p.project.title}
         custNo = {p.project.homeOwnerPhone}
         custEmai = {p.project.homeOwnerEmail}
