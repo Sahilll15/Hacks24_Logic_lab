@@ -24,7 +24,7 @@ const register = async (req, res) => {
         const user = await User.create({ name, email, phone, password: hashedPassword, role });
 
         if (user.role === 'designer') {
-            await Designer.create({ name, email, designer: user._id });
+            await Designer.create({ name, email, phone, designer: user._id });
         } else if (user.role === 'owner') {
             await Owner.create({ name, email, owner: user._id });
         }

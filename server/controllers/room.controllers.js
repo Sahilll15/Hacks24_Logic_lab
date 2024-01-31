@@ -94,8 +94,6 @@ const deleteRoom = async (req, res) => {
 }
 
 
-
-
 module.exports = {
     createRoom,
     getRoomsByProject,
@@ -103,3 +101,4 @@ module.exports = {
     updateRoom,
     deleteRoom
 }
+

@@ -1,5 +1,6 @@
 const express = require('express');
 const authRoutes = require('./routes/auth.routes');
+const projectRoutes = require('./routes/project.routes')
 
 const app = express();
 require('dotenv').config()
@@ -28,6 +29,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/project', projectRoutes);
 
 
 // app.post('/api/create-payment-session', async (req, res) => {
