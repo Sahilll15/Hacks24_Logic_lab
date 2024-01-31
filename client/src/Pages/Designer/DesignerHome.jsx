@@ -31,9 +31,9 @@ const DesignerHome = () => {
     <div>
       <div className="min-h-screen bg-gray-100">
         <div>
-          <p className="ml-8 text-2xl">
+          <p className="ml-8 text-3xl">
             <br/>
-            WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
+            WELCOME, <b className="text-orange-400">Rehman Khan</b>
           </p>
         </div>
         <center>
@@ -123,6 +123,8 @@ const DesignerHome = () => {
                 </Dialog.Title>
 
                 <NewProjectForm />
+
+                
               </div>
             </Transition.Child>
           </div>

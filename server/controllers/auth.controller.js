@@ -3,6 +3,8 @@ const { Designer } = require('../models/designer.model');
 const bcrypt = require('bcrypt');
 const { Contractor } = require('../models/contractor.model');
 const jwt = require('jsonwebtoken');
+const { Owner } = require('../models/owner.model');
+const { Project } = require('../models/project.models');
 
 
 const register = async (req, res) => {
@@ -29,7 +31,19 @@ const register = async (req, res) => {
         if (user.role === 'designer') {
             await Designer.create({ name, email, phone, designer: user._id });
         } else if (user.role === 'owner') {
-            await Owner.create({ name, email, phone, owner: user._id });
+            const owner = await Owner.create({ name, email, phone, owner: user._id });
+
+            const projects = await Project.find({ homeOwnerEmail: email });
+
+            if (projects.length > 0) {
+                projects.forEach(async (project) => {
+                    owner.projects.push(project._id);
+                    await project.save();
+                }
+                )
+            }
+            await owner.save();
+
         } else if (user.role === 'contractor') {
             await Contractor.create({ name, email, phone, contractor: user._id });
         }
