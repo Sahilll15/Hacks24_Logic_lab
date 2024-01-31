@@ -37,10 +37,11 @@ const TaskCard = ({ tasks }) => {
               <thead>
                 <tr className="">
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>Tiling Work</th>
-                  <th className="border-r-2 p-2" style={{ width: "15%" }}>Sahil Chalke</th>
+                  <th className="border-r-2 p-2" style={{ width: "15%" }}>{task?.taskAssigned || 'No Contractor'}</th>
                   <th className="border-r-2 p-2 bg-green-500" style={{ width: "10%" }}>
                     <select className="appearance-none bg-transparent border-none w-full text-white focus:outline-none">
-                      <IoIosArrowDropdown /> ddd
+                      <IoIosArrowDropdown />
+                      <option key={task.status} defaultValue={task.status} className='bg-gray-700' value={task.status}>{task.status}</option>
 
                       {optionsCompleted.map((option) => (
                         <option key={option} className='bg-gray-700' value={option}>{option}</option>
@@ -49,13 +50,14 @@ const TaskCard = ({ tasks }) => {
                   </th>
                   <th className="border-r-2  bg-red-300" style={{ width: "10%" }}>
                     <select className="appearance-none bg-transparent border-none w-full text-white p-2 focus:outline-none">
+                      <option key={task.priority} defaultValue={task.priority} className='bg-gray-700' value={task.priority}>{task.priority}</option>
                       {optionsHigh.map((option) => (
-                        <option key={option} className='bg-gray-700' value={option}>{option}</option>
+                        <option key={option} defaultValue={task.priority} className='bg-gray-700' value={option}>{option}</option>
                       ))}
                     </select>
                   </th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>69/69/69</th>
-                  <th className="border-r-2 p-2" style={{ width: "15%" }}>1000</th>
+                  <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.budget || "Budget Not decided"}</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>1200</th>
                   <th style={{ width: "20%" }}><CiImageOn /></th>
                 </tr>
