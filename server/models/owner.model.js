@@ -16,7 +16,6 @@ const OwnerSchema = mongoose.Schema({
     phone: {
         type: String,
         required: true,
-
     },
 
     owner: {

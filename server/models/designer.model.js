@@ -17,7 +17,6 @@ const DesignerSchema = mongoose.Schema({
         required: true,
     },
 
-
     desginer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
