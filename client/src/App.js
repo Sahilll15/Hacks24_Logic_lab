@@ -16,7 +16,9 @@ import ContractorHome from "./Pages/Contractor/ContractorHome";
 import ContractorTask from "./Pages/Contractor/ContractorTask";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import Allchart from "./Pages/Charts/Allchart";
-
+import AmazonProductComponent from "./Pages/ExtraFeatres/Fetchproducts";
+import Zego from "./Pages/ExtraFeatres/Zego";
+import Video from "./Pages/ExtraFeatres/Video";
 
 
 const App = () => {
@@ -41,6 +43,9 @@ const App = () => {
               <Route path="/room/:roomId" element={<RoomStatus />} />
               <Route path="/contractor" element={<ContractorHome />} />
               <Route path="/contractor/task" element={<ContractorTask />} />
+              <Route path="/ecommerce" element={<AmazonProductComponent />} />
+              <Route path="/video" element={<Video />} />
+              <Route path="/meet/:roomId" element={<Zego />} />
 
             </Route>
 
