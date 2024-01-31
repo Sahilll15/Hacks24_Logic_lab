@@ -14,6 +14,8 @@ const ProjectCard = ({
     img,
     percentage,
 }) => {
+    const imgURL = "https://www.arch2o.com/wp-content/uploads/2022/02/Arch2O-7-benefits-of-3d-home-floor-plans-1-scaled.jpeg";
+
     const navigate = useNavigate();
     return (
         <div
@@ -26,7 +28,7 @@ const ProjectCard = ({
                         <div className="bg-white shadow-xl rounded-lg overflow-hidden">
                             <div
                                 className="bg-cover bg-center h-56 p-4"
-                                style={{ backgroundImage: `url(${img})` }}
+                                style={{ backgroundImage: `url(${imgURL})` }}
                             >
                                 <div className="flex justify-end"></div>
                             </div>
