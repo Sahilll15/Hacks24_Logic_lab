@@ -1,29 +1,17 @@
-import { Pie } from "react-chartjs-2";
-import React, { useState } from "react";
+// src/components/PieChart.js
+import React from 'react';
+import Chart from 'react-apexcharts';
 
+const PieChart = ({ data }) => {
+  const options = {
+    labels: data.map(item => item.label),
+  };
 
+  const series = data.map(item => item.value);
 
-function PieChartComponent({
-    labels = ["2010", "2012", "2014", "2016", "2018"],
-    datasets = [
-        {
-            data: [2000, 4000, 2300, 2222, 3333],
-            backgroundColor: ["#003f5c", "#58508d", "#bc5090", "#ff6361", "#ffa600"]
-        }
-    ]
-}) {
-    return (
-        <Pie
-            options={{
-                width: "400",
-                height: "400"
-            }}
-            data={{
-                labels: labels,
-                datasets: datasets
-            }}
-        />
-    );
-}
+  return (
+    <Chart options={options} series={series} type="pie" width="380" />
+  );
+};
 
-export default PieChartComponent;
+export default PieChart;
