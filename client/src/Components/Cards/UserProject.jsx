@@ -19,7 +19,7 @@ const UserProject = ({
     const navigate = useNavigate();
     return (
         <div
-            onClick={() => navigate(`/customer/dashboard/${projectId}`)}
+            onClick={() => navigate(`/customerdashboard/${projectId}`)}
             className="antialiased font-sans "
         >
             <div className="">

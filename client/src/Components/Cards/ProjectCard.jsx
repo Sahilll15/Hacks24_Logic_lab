@@ -37,6 +37,7 @@ const ProjectCard = ({
                                     {projTitle} - ₹{totalBudget}
                                 </p>
                                 <p className="text-gray-700">{custNo}</p>
+                                <p> {projectId}</p>
                                 <p className="text-gray-700">{custEmail}</p>
                             </div>
                             <div className="flex mb-2 items-center justify-between">

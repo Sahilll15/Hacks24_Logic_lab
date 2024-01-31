@@ -19,6 +19,7 @@ import CustomerHome from "./Pages/Customer/CustomerHome";
 import CustDash from "./Pages/Customer/CustDash";
 import Chat from "./Pages/Customer/Chat";
 import Deadline from "./Pages/Customer/Charts";
+import CustomerDashBoard from "./Pages/Dashboard/CustomerDashboard";
 
 
 
@@ -44,7 +45,7 @@ const App = () => {
               <Route path="/contractor" element={<ContractorHome />} />
               <Route path="/contractor/task" element={<ContractorTask />} />
               <Route path="/customer" element={<CustomerHome />} />
-              <Route path="/customer/dashboard/:pId" element={<CustDash />} />
+              <Route path="/customerdashboard/:pId" element={<CustomerDashBoard />} />
               <Route path="/chat/:pId" element={<Chat />} />
               <Route path="/customer/charts" element={<Deadline />} />
 
