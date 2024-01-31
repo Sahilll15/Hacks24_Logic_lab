@@ -1,19 +1,33 @@
 const { Task } = require('../models/task.models')
-
-
+const { Contractor } = require('../models/contractor.model');
+const { Room } = require('../models/room.models');
 const createTask = async (req, res) => {
     const { projectId } = req.params;
-    const { roomId } = req.params;
+    const { roomId  } = req.params;
     try {
-        const { title, description, priority, budget } = req.body;
+        const { title, description, priority } = req.body;
+        const room = await Room.findById(roomId);
+
+        if (!room) {
+            return res.status(400).json({ error: 'Room not found' });
+        }
+
         const task = await Task.create({
+
             title,
             description,
             project: projectId,
             room: roomId,
             priority,
-            budget
         });
+
+
+        room.tasks.push(task._id);
+
+        await room.save();
+
+
+   
         res.status(200).json({ task });
     } catch (error) {
         console.log(error);
@@ -72,6 +86,18 @@ const assignContractor = async (req, res) => {
         const task = await Task.findByIdAndUpdate(taskId, {
             contractor: contractorId
         });
+
+        const contractor = await Contractor.findById(contractorId)
+
+        contractor.tasks_assigned.push(taskId);
+
+        task.contractor = contractorId;
+        task.taskAssigned = true;
+        await task.save();
+
+        await contractor.save();
+
+        
         res.status(200).json({ task });
 
     } catch (error) {
@@ -87,7 +113,22 @@ const deleteTask = async (req, res) => {
 
     try {
         const task = await Task.findByIdAndDelete(taskId);
+
+        const contractor = await Contractor.findById(task.contractor);
+
+        contractor.tasks_assigned.pull(taskId);
+
+        const room = await Room.findById(task.room);
+
+        room.tasks.pull(taskId);
+
+        await room.save();
+
+        await contractor.save();
+       
+
         res.status(200).json({ task });
+
 
     } catch (error) {
         console.log(error);

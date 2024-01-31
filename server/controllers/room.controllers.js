@@ -29,6 +29,7 @@ const createRoom = async (req, res) => {
             project: projectId
         });
 
+        prj.budget += budget;
         prj.rooms.push(room._id);
         await prj.save();
 
