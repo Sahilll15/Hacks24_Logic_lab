@@ -23,12 +23,21 @@ const UserSchema = mongoose.Schema({
         required: true
     },
 
+
     role: {
         type: String,
-        enum: ['designer', 'owner', 'vendor'],
+        enum: ['designer', 'owner', 'vendor', 'contractor'],
         default: 'designer'
-    }
+    },
+    phone: {
+        type: Number,
+        required: true,
+        unique: true
+    },
+
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
+
+module.exports = { User };

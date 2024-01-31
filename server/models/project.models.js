@@ -62,3 +62,4 @@ const projectModel = new mongoose.Schema({
 const Project = mongoose.model('Project', projectModel);
 
 module.exports = { Project };
+

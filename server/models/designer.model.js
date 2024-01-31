@@ -12,17 +12,17 @@ const DesignerSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-
     phone: {
         type: String,
         required: true,
-
     },
+
 
     desginer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+
 
     clients: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -38,4 +38,6 @@ const DesignerSchema = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Designer', DesignerSchema);
+const Designer = mongoose.model('Designer', DesignerSchema);
+
+module.exports = { Designer };

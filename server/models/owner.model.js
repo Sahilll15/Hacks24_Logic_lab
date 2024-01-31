@@ -28,4 +28,6 @@ const OwnerSchema = mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('Owner', OwnerSchema);
+const Owner = mongoose.model('Owner', OwnerSchema);
+
+module.exports = { Owner };
