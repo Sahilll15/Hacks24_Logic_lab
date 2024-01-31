@@ -19,6 +19,7 @@ import CustomerHome from "./Pages/Customer/CustomerHome";
 import CustDash from "./Pages/Customer/CustDash";
 import Chat from "./Pages/Customer/Chat";
 import Deadline from "./Pages/Customer/Charts";
+import ProjDoc from "./Pages/Documents/ProjDoc";
 
 
 
@@ -47,6 +48,7 @@ const App = () => {
               <Route path="/customer/dashboard" element={<CustDash />} />
               <Route path="/customer/chat" element={<Chat />} />
               <Route path="/customer/charts" element={<Deadline />} />
+              <Route path="/project/documents" element={<ProjDoc />} />
 
             </Route>
 

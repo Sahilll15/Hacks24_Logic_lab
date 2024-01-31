@@ -93,7 +93,7 @@ const TaskCard = ({ tasks }) => {
           <div className="bg-white p-4 rounded- w-80">
             <p onClick={closeModal}>close</p>
 
-            <form  className="my-form bg-gray-200 p-4 rounded-md">
+            <form   className="my-form bg-gray-200 p-4 rounded-md">
       <div className="mb-4">
         <label htmlFor="priority" className="block text-sm font-medium text-gray-600">
           Select Priority:
