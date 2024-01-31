@@ -1,5 +1,6 @@
-const {User} = require('../models/user.model');
-const {Designer} = require('../models/designer.model');
+const { User } = require('../models/user.model');
+const { Designer } = require('../models/designer.model');
+const { Owner } = require('../models/owner.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -15,6 +16,8 @@ const register = async (req, res) => {
 
         const doesUserExists = await User.findOne({ email });
 
+
+
         if (doesUserExists) {
             return res.status(400).json({ message: `User with email ${email} already exists` });
         }
@@ -26,7 +29,7 @@ const register = async (req, res) => {
         if (user.role === 'designer') {
             await Designer.create({ name, email, phone, designer: user._id });
         } else if (user.role === 'owner') {
-            await Owner.create({ name, email, owner: user._id });
+            await Owner.create({ name, email, phone, owner: user._id });
         }
 
         return res.status(201).json({ message: `${role} registered successfully` });
