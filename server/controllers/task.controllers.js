@@ -1,19 +1,23 @@
 const { Task } = require('../models/task.models')
 const { Contractor } = require('../models/contractor.model');
 const { Room } = require('../models/room.models');
+
+
+
 const createTask = async (req, res) => {
-    const { projectId } = req.params;
-    const { roomId  } = req.params;
+    // const { projectId } = req.params;
+    const { roomId } = req.params;
     try {
-        const { title, description, budget, priority } = req.body;
+        const { title, description, priority, budget } = req.body;
         const room = await Room.findById(roomId);
 
         if (!room) {
             return res.status(400).json({ error: 'Room not found' });
         }
 
-        const task = await Task.create({
+        const projectId = room.project;
 
+        const task = await Task.create({
             title,
             description,
             project: projectId,
@@ -31,7 +35,7 @@ const createTask = async (req, res) => {
         await room.save();
 
 
-   
+
         res.status(200).json({ task });
     } catch (error) {
         console.log(error);
@@ -102,7 +106,7 @@ const assignContractor = async (req, res) => {
 
         await contractor.save();
 
-        
+
         res.status(200).json({ task });
 
     } catch (error) {
@@ -130,7 +134,7 @@ const deleteTask = async (req, res) => {
         await room.save();
 
         await contractor.save();
-       
+
 
         res.status(200).json({ task });
 

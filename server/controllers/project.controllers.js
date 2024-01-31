@@ -155,7 +155,7 @@ const getProjectById = async (req, res) => {
                 if (task) tasks_.push(task);
                 if (task?.status === 'completed') percentageOfCompletion++;
 
-               
+
             }
 
             rooms.push({
@@ -163,7 +163,11 @@ const getProjectById = async (req, res) => {
                 percentageOfCompletion: Math.round((percentageOfCompletion / room.tasks.length) * 100)
             })
 
+          
+
         }
+
+
         if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }

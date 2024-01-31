@@ -1,12 +1,17 @@
 import React from 'react';
 import Hall from "../../Assets/Images/Hall.png";
+import { useParams, useNavigate } from 'react-router-dom'
 
 
 
 
 const TopCard = ({ room }) => {
+
+  const navigate = useNavigate();
+
+
   return (
-    <div>
+    <div >
       <div className="relative flex flex-col w-80 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
         <div className="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
           <img src={Hall} alt="hall image" />
@@ -29,22 +34,25 @@ const TopCard = ({ room }) => {
               </div>
               <div className="text-right">
                 <span className="text-xs font-semibold inline-block text-green-600">
-                  {room.percentageOfCompletion}%
+                  {room.percentageOfCompletion || 0}%
                 </span>
               </div>
             </div>
             <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-200 w-full">
               <div
                 style={{ width: `${room.percentageOfCompletion}%` }}
-                className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${room.percentageOfCompletion > 30 ? "bg-red-500" : "bg-green-500"}`}
+                className={`shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${room.percentageOfCompletion < 30 ? "bg-red-500" : "bg-green-500"}`}
               ></div>
-
             </div>
           </div>
           <button
             data-ripple-light="true"
             type="button"
+
             className="select-none rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-gray-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+            onClick={() => {
+              navigate(`/room/${room.room._id}`)
+            }}
           >
             Check Status
           </button>
