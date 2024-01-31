@@ -1,4 +1,4 @@
-const User = require('../models/user.model');
+const {User} = require('../models/user.model');
 const Designer = require('../models/designer.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -24,7 +24,7 @@ const register = async (req, res) => {
         const user = await User.create({ name, email, phone, password: hashedPassword, role });
 
         if (user.role === 'designer') {
-            await Designer.create({ name, email, designer: user._id });
+            await Designer.create({ name, email, phone, designer: user._id });
         } else if (user.role === 'owner') {
             await Owner.create({ name, email, owner: user._id });
         }
@@ -61,8 +61,8 @@ const login = async (req, res) => {
         const token = jwt.sign({ id: doesUserExists._id, email: doesUserExists.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
         let designer = null;
-
-        if (doesUserExists.role === 'designer') {
+        console.log(doesUserExists.role);
+        if (doesUserExists.role == 'designer') {
 
             designer = await Designer.findOne({ designer: doesUserExists._id });
 

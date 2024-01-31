@@ -19,7 +19,7 @@ const DesignerSchema = mongoose.Schema({
         unique: true
     },
 
-    desginer:{
+    designer:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
@@ -38,4 +38,6 @@ const DesignerSchema = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Designer', DesignerSchema);
+const Designer =  mongoose.model('Designer', DesignerSchema);
+
+module.exports = { Designer };

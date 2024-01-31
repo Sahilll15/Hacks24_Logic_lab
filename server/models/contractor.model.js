@@ -21,4 +21,6 @@ const contractorModel = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('Contractor', contractorModel);
+const Contractor = mongoose.model('Contractor', contractorModel);
+
+module.exports = { Contractor };
