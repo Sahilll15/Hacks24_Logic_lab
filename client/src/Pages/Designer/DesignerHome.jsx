@@ -48,6 +48,7 @@ const DesignerHome = () => {
           {projects.map((project) => {
             return (
               <ProjectCard
+                projectId={project._id}
                 key={project._id}
                 projTitle={project.title}
                 custNo={project.homeOwnerPhone}
@@ -57,7 +58,7 @@ const DesignerHome = () => {
               />
             );
           })}
-          
+
         </div>
       </div>
 

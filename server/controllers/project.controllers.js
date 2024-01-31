@@ -118,6 +118,7 @@ const getProjectById = async (req, res) => {
         const project = await Project.findById(projectId);
 
         for (const x of project.rooms) {
+        for (const x of project.rooms) {
             const room = await Room.findById(x);
             let percentageOfCompletion = 0;
             for (const y of room.tasks) {
@@ -136,8 +137,10 @@ const getProjectById = async (req, res) => {
 
         }
         if (!project) {
+        if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }
+        res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length });
         res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length });
     } catch (error) {
         console.log(error);
