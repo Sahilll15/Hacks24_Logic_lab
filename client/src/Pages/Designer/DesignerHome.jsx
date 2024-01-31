@@ -46,7 +46,7 @@ const DesignerHome = () => {
             </div>
           </div>
         </center>
-        <div className="flex m-16 gap-6 flex-wrap">
+        <div className="flex m-16 gap-6 flex-wrap ">
           {
             projects.map((project) => {
               return (
