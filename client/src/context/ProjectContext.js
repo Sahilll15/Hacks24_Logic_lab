@@ -9,6 +9,15 @@ const ProjectProvider = ({ children }) => {
     const [projects, setProjects] = useState([]);
 
 
+    const [project, setProject] = useState(null);
+
+
+    const setCurrentproject = (project) => {
+
+        setProject(project);
+    }
+
+
     const createProject = async (payload) => {
         try {
             const { title, description, homeOwnerEmail, homeOwnerPhone } = payload;
@@ -45,7 +54,7 @@ const ProjectProvider = ({ children }) => {
 
 
     return (
-        <ProjectContext.Provider value={{ createProject, projects, getProjectsByDesigner }}>
+        <ProjectContext.Provider value={{ createProject, projects, getProjectsByDesigner, project, setCurrentproject }}>
             {children}
         </ProjectContext.Provider>
     );

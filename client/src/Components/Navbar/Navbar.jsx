@@ -15,8 +15,9 @@ const Navbar = () => {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <NavLink to={'/designer'} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Home</NavLink>
-                <NavLink href="/dashboard" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">DashBoard</NavLink>
-                <NavLink href="/profile" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Profile</NavLink>
+                <NavLink to={"/dashboard"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">DashBoard</NavLink>
+                <NavLink to={"/profile"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Profile</NavLink>
+                <NavLink to={"/customerdashboard"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">CustomerDashBoard</NavLink>
                 <button onClick={() => {
                   localStorage.removeItem("auth");
                   window.location.href = "/login";
