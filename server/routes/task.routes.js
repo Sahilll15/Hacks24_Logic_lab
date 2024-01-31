@@ -2,7 +2,7 @@ const { createTask, deleteTask, updateTask, assignContractor } = require('../con
 
 const router = require('express').Router();
 
-router.post('/create', createTask);
+router.post('/create/project/:projectId/room/:roomId', createTask);
 router.delete('/delete/:taskId', deleteTask);
 router.put('/update/:taskId', updateTask);
 router.put('/assign/:taskId/:contractorId', assignContractor);

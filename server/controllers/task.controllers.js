@@ -5,12 +5,14 @@ const createTask = async (req, res) => {
     const { projectId } = req.params;
     const { roomId } = req.params;
     try {
-        const { title, description } = req.body;
+        const { title, description, priority, budget } = req.body;
         const task = await Task.create({
             title,
             description,
             project: projectId,
-            room: roomId
+            room: roomId,
+            priority,
+            budget
         });
         res.status(200).json({ task });
     } catch (error) {

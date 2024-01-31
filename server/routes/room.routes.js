@@ -1,13 +1,15 @@
 const { createRoom, deleteRoom, updateRoom, getRoomsByProject } = require('../controllers/room.controllers')
 
+const {validateToken} = require('../middleware/validateToken');
 
 const router = require('express').Router();
 
 
-router.post('/create', createRoom);
-router.delete('/delete/:id', deleteRoom);
-router.put('/update/:id', updateRoom);
-router.get('/project/:id', getRoomsByProject);
+
+router.post('/create/:id', validateToken, createRoom);
+router.delete('/delete/:id', validateToken, deleteRoom);
+router.put('/update/:id', validateToken,  updateRoom);
+router.get('/project/:id', validateToken, getRoomsByProject);
 
 module.exports = router;
 

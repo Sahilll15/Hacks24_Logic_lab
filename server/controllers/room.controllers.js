@@ -1,22 +1,23 @@
 const { Room } = require('../models/room.models')
 const { Designer } = require('../models/designer.model')
+const { Project } = require('../models/project.models')
 
 
 const createRoom = async (req, res) => {
     const { id: designerId } = req.user;
-    const { projectId } = req.params;
+    const {id: projectId } = req.params;
     try {
 
-        const isDesigner = await Designer.findById(designerId);
+        const isDesigner = await Designer.findOne({ designer: designerId });
 
         if (!isDesigner) {
             return res.status(400).json({ error: 'You are not a designer' });
 
         }
 
-        const Project = await Project.findById(projectId);
+        const prj = await Project.findById(projectId);
 
-        if (!Project) {
+        if (!prj) {
             return res.status(400).json({ error: 'Project not found' });
         }
 
@@ -28,8 +29,8 @@ const createRoom = async (req, res) => {
             project: projectId
         });
 
-        Project.rooms.push(room._id);
-        await Project.save();
+        prj.rooms.push(room._id);
+        await prj.save();
 
         res.status(200).json({ room });
     } catch (error) {
@@ -43,7 +44,7 @@ const getRoomsByProject = async (req, res) => {
     const { id: projectId } = req.params;
     try {
         const rooms = await Room.find({
-            project: id
+            project: projectId
         });
         res.status(200).json({ rooms });
     } catch (error) {
@@ -86,7 +87,10 @@ const deleteRoom = async (req, res) => {
     const { id } = req.params;
     try {
         const room = await Room.findByIdAndDelete(id);
-        res.status(200).json({ room });
+        const project = await Project.findById(room.project);
+        project.rooms.pull(room._id);
+        await project.save();
+        res.status(200).json({ message: 'Room deleted successfully'});
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
