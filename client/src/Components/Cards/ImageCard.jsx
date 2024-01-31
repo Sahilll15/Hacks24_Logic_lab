@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ImageCard = () => {
+const ImageCard = ( {projTitle, custNo, custEmail, onClick, img}) => {
   return (
    <div>
   <div className="product-card w-[300px] rounded-md shadow-xl overflow-hidden z-[100] relative cursor-pointer snap-start shrink-0 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
@@ -13,12 +13,11 @@ const ImageCard = () => {
     </div>
     <div className="absolute rounded-full bg-gray-500 z-20 left-1/2 top-[44%] h-[110%] w-[110%] -translate-x-1/2 group-hover:top-[58%] transition-all duration-300" />
     <div className="para uppercase text-center leading-none z-40">
-      <p className="text-black font-semibold text-xs font-serif">Best</p>
-      <p className="font-bold text-xl tracking-wider text-gray-500">Developer</p>
+      <p className="font-bold text-xl tracking-wider text-gray-500">{projTitle}</p>
     </div>
     <div className="img w-[180px] aspect-square bg-gray-100 z-40 rounded-md">
       
-        <img src="https://avatars.githubusercontent.com/u/121731399?v=3" alt="" />
+        <img src={img} alt="" />
      
     </div>
     <div className="btm-_container z-40 flex flex-row justify-between items-end gap-10">
@@ -29,7 +28,7 @@ const ImageCard = () => {
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
             </svg>
           </div>
-          <p className="font-semibold text-xs text-white">+1234 456 780</p>
+          <p className="font-semibold text-xs text-white">{custNo || "no mobile "}</p>
         </div>
         <div className="flex flex-row gap-2">
           <div className="inline-flex gap-3 items-center justify-center">
@@ -39,12 +38,13 @@ const ImageCard = () => {
                 <polyline points="22,6 12,13 2,6" />
               </svg>
             </div>
-            <p className="font-semibold text-xs text-white">email@gmail.com</p>
+            <p className="font-semibold text-xs text-white">{custEmail || "no email"}</p>
           </div>
         </div>
       </div>
       <div className="btn">
-        <button className="uppercase font-semibold text-xs px-2 whitespace-nowrap py-1 rounded-full bg-white text-gray-800">
+        <button className="uppercase font-semibold text-xs px-2 whitespace-nowrap py-1 rounded-full bg-white text-gray-800"
+        onClick={onClick}>
           Contact NOW
         </button>
       </div>

@@ -1,5 +1,8 @@
 const express = require('express');
 const authRoutes = require('./routes/auth.routes');
+const projectRoutes = require('./routes/project.routes')
+const roomRoutes = require('./routes/room.routes')
+const taskRoutes = require('./routes/task.routes')
 
 const app = express();
 require('dotenv').config()
@@ -28,6 +31,9 @@ mongoose.connect(process.env.MONGO_URI, {
 
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/project', projectRoutes);
+app.use('/api/v1/room', roomRoutes);
+app.use('/api/v1/task', taskRoutes);
 
 
 // app.post('/api/create-payment-session', async (req, res) => {

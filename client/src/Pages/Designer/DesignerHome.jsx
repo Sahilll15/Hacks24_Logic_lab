@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { Dialog, Transition } from "@headlessui/react";
 import NewProjectForm from "../../Components/Designer/Home/NewProjectForm";
+import ImageCard from "../../Components/Cards/ImageCard";
 
 const DesignerHome = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,8 +23,8 @@ const DesignerHome = () => {
             WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
           </p>
         </div>
-        <div className="flex m-16">
-          <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+        <center>
+        <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
             <div
               className="bg-gray-200 p-4 rounded-md mb-6 flex items-center justify-center cursor-pointer"
               onClick={openModal}
@@ -32,6 +33,13 @@ const DesignerHome = () => {
               <span className="ml-2">Add Project</span>
             </div>
           </div>
+        </center>
+        <div className="flex m-16">
+
+          
+
+        <ImageCard projTitle="Project Name" custNo="8888888888" custEmail="abc@gmail.com" img="https://avatars.githubusercontent.com/u/121731399?v=3" />
+          
         </div>
       </div>
 
