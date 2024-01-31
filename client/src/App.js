@@ -15,6 +15,7 @@ import RoomStatus from "./Pages/Designer/RoomStatus";
 import ContractorHome from "./Pages/Contractor/ContractorHome";
 import ContractorTask from "./Pages/Contractor/ContractorTask";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import Allchart from "./Pages/Charts/Allchart";
 
 
 
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/" element={<Landing />} />
             <Route element={<ProtectedRoutes />} >
               <Route path="/docs" element={<Document />} />
+              <Route path="/charts" element={<Allchart />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/designer" element={<DesignerHome />} />
