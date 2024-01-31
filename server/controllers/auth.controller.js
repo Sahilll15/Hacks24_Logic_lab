@@ -2,6 +2,8 @@ const { User } = require('../models/user.model');
 const { Designer } = require('../models/designer.model');
 const { Owner } = require('../models/owner.model');
 const bcrypt = require('bcrypt');
+const {Owner} = require('../models/owner.model');
+const {Contractor} = require('../models/contractor.model');
 const jwt = require('jsonwebtoken');
 
 
@@ -30,6 +32,8 @@ const register = async (req, res) => {
             await Designer.create({ name, email, phone, designer: user._id });
         } else if (user.role === 'owner') {
             await Owner.create({ name, email, phone, owner: user._id });
+        } else if (user.role === 'contractor') {
+            await Contractor.create({ name, email, phone, contractor: user._id });
         }
 
         return res.status(201).json({ message: `${role} registered successfully` });
@@ -65,9 +69,15 @@ const login = async (req, res) => {
 
         let designer = null;
         console.log(doesUserExists.role);
-        if (doesUserExists.role == 'designer') {
+        if (doesUserExists.role === 'designer') {
 
             designer = await Designer.findOne({ designer: doesUserExists._id });
+        }
+
+        let contractor = null;
+        if (doesUserExists.role == 'contractor') {
+
+            contractor = await Contractor.findOne({ contractor: doesUserExists._id });
 
         }
 
@@ -75,7 +85,8 @@ const login = async (req, res) => {
             name: doesUserExists.name,
             email: doesUserExists.email,
             role: doesUserExists.role,
-            designer
+            designer,
+            contractor
         }
 
         return res.status(200).json({ message: `${payload.role} logged in successfully`, token, user: payload });

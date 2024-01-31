@@ -1,26 +1,28 @@
 const { Project } = require('../models/project.models')
-const {Designer} = require('../models/designer.model');
+const { Designer } = require('../models/designer.model');
 const { invite_home_owner_to_project } = require('../utils/email');
 
 
 const createProject = async (req, res) => {
     const { id: designerId } = req.user;
-    console.log(designerId);
     try {
 
         const isDesigner = await Designer.findOne({ designer: designerId });
+
+        console.log(isDesigner)
 
         if (!isDesigner) {
             return res.status(400).json({ error: 'You are not a designer' });
 
         }
+
+
         const { title, description, budget, homeOwnerName, homeOwnerEmail, homeOwnerPhone, image } = req.body;
         const randomPwd = Math.random().toString(36).slice(-8);
         const project = await Project.create({
             title,
             description,
             designer: designerId,
-            budget,
             homeOwnerName,
             homeOwnerEmail,
             homeOwnerPhone,
@@ -94,12 +96,12 @@ const deleteProject = async (req, res) => {
 
         const designer = await Designer.findOne({ designer: designerId });
 
-        if(designer.projects.includes(projectId)) {
+        if (designer.projects.includes(projectId)) {
             designer.projects = designer.projects.filter(project => project !== projectId);
             await designer.save();
         }
 
-        res.status(200).json({ message: 'Project deleted successfully'});
+        res.status(200).json({ message: 'Project deleted successfully' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });

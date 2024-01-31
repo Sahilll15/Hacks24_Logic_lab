@@ -14,7 +14,7 @@ const taskModel = new mongoose.Schema({
         type: String,
         required: true,
         default: 'pending',
-        enum: ['pending', 'accepted', 'rejected']
+        enum: ['pending', 'accepted', 'rejected', "in-progress", "completed"]
     },
     images: {
         type: Array,
@@ -22,7 +22,6 @@ const taskModel = new mongoose.Schema({
     },
     budget: {
         type: Number,
-        required: true
     },
     room: {
         type: mongoose.Schema.Types.ObjectId,
@@ -41,7 +40,8 @@ const taskModel = new mongoose.Schema({
         // required: true``
     },
 
-    contractorAcceptedTask: {
+
+    taskAssigned: {
         type: Boolean,
         default: false
     },
