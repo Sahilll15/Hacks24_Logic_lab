@@ -123,6 +123,8 @@ const DesignerHome = () => {
                 </Dialog.Title>
 
                 <NewProjectForm />
+
+                
               </div>
             </Transition.Child>
           </div>
