@@ -1,15 +1,43 @@
 import React, { useEffect } from 'react';
 import { CiImageOn } from 'react-icons/ci';
 import { IoIosArrowDropdown } from "react-icons/io";
+import axios from 'axios'
 
 
 const TaskCard = ({ tasks }) => {
   const optionsCompleted = ['Completed', 'In Progress'];
   const optionsHigh = ['Low', 'Medium', 'High'];
 
+
+
+  // const updateTask = async () => {
+  //   try {
+  //     const response = await axios.post(`http://localhost:4000/api/v1/task/update/${taskId}`, {
+  //       title: title,
+  //       description: description,
+  //       priority: priority,
+  //       budget: budget
+  //     }, {
+  //       headers: {
+  //         'Authorization': `Bearer ${localStorage.getItem('auth')}`
+  //       }
+  //     })
+
+  //     console.log(response)
+
+  //   }
+  //   catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+
+
   useEffect(() => {
     console.log(tasks)
   }, [tasks])
+
+
 
   return (
     <div className='bg-gray-100'>
@@ -32,7 +60,7 @@ const TaskCard = ({ tasks }) => {
       {
         tasks.map((task) => (
 
-          <div className="task-card bg-indigo-400 text-white overflow-hidden rounded-lg m-2">
+          <div className="task-card bg-indigo-400 text-white overflow-hidden rounded-lg m-2" key={task._id}>
             <table className="rounded-table w-full">
               <thead>
                 <tr className="">
@@ -44,7 +72,8 @@ const TaskCard = ({ tasks }) => {
                       <option key={task.status} defaultValue={task.status} className='bg-gray-700' value={task.status}>{task.status}</option>
 
                       {optionsCompleted.map((option) => (
-                        <option key={option} className='bg-gray-700' value={option}>{option}</option>
+                        <option key={option} className='bg-gray-700' value={option}
+                        >{option}</option>
                       ))}
                     </select>
                   </th>

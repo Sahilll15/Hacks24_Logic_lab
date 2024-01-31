@@ -75,18 +75,18 @@ const getTasksByRoom = async (req, res) => {
 const updateTask = async (req, res) => {
     const { id } = req.params;
     try {
-        const { title, description, status } = req.body;
-        const task = await Task.findByIdAndUpdate(id, {
-            title,
-            description,
-            status
-        });
+
+        const task = await Task.findByIdAndUpdate(id,
+            { $set: req.body }
+        );
         res.status(200).json({ task });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
     }
 }
+
+
 
 const assignContractor = async (req, res) => {
     const { taskId, contractorId } = req.params;

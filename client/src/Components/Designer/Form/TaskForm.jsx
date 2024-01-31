@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
 
-const TaskForm = ({ closeModal, roomId }) => {
+const TaskForm = ({ closeModal, roomId, percentage }) => {
 
 
   const addTask = async () => {
