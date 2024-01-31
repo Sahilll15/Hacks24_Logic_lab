@@ -11,8 +11,10 @@ const LongCard = ({  name,  id,  desc, status }) => {
       <h2>
       {desc}
       </h2>
-      
-      <span>12/11/24 11:50pm</span>
+      <div className='flex justify-between'>
+      <span className=''>Created: 12/11/24 11:50pm</span>
+      <span className='bg-green-600 p-2 rounded-lg text-white'>Completed: 12/11/24 11:50pm</span>
+      </div>
       <p className="flex items-center">
         <strong>Status:</strong>
        
