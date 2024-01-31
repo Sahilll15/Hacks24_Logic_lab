@@ -23,7 +23,7 @@ import Allchart from "./Pages/Charts/Allchart";
 import AmazonProductComponent from "./Pages/ExtraFeatres/Fetchproducts";
 import Zego from "./Pages/ExtraFeatres/Zego";
 import Video from "./Pages/ExtraFeatres/Video";
-
+import FeedbackForm from "./Pages/ExtraFeatres/Feedback";
 
 const App = () => {
   return (
@@ -53,6 +53,7 @@ const App = () => {
               <Route path="/customer/charts" element={<Deadline />} />
               <Route path="/ecommerce" element={<AmazonProductComponent />} />
               <Route path="/video" element={<Video />} />
+              <Route path="/feedback" element={<FeedbackForm />} />
               <Route path="/meet/:roomId" element={<Zego />} />
 
             </Route>

@@ -3,6 +3,7 @@ const authRoutes = require('./routes/auth.routes');
 const projectRoutes = require('./routes/project.routes')
 const roomRoutes = require('./routes/room.routes')
 const taskRoutes = require('./routes/task.routes')
+const feedbackRoutes = require('./routes/feedback.routes')
 
 const app = express();
 require('dotenv').config()
@@ -29,7 +30,7 @@ app.listen(process.env.PORT, () => {
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log('DB Connected'));
 
-
+app.use('/api/v1/feedback', feedbackRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/project', projectRoutes);
 app.use('/api/v1/room', roomRoutes);
