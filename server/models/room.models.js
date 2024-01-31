@@ -19,10 +19,10 @@ const roomModel = new mongoose.Schema({
         type: Array,
         default: []
     },
-    task: [
+    tasks: [
         {
-            type: String,
-
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Task'
         }
     ],
     budget: {
