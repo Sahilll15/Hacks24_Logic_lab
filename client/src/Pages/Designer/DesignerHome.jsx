@@ -6,7 +6,6 @@ import ImageCard from "../../Components/Cards/ImageCard";
 import { useProject } from "../../context/ProjectContext";
 import ProjectCard from "../../Components/Cards/ProjectCard";
 
-
 const DesignerHome = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,13 +21,13 @@ const DesignerHome = () => {
 
   useEffect(() => {
     getProjectsByDesigner().then((res) => {
-      console.log(res)
-    })
-  }, [])
+      console.log(res);
+    });
+  }, []);
 
   return (
     <div>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-gray-100">
         <div>
           <p className="ml-8 mt-8 text-2xl">
             WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
@@ -46,24 +45,28 @@ const DesignerHome = () => {
           </div>
         </center>
         <div className="flex m-16 gap-6">
-          {
-            projects.map((project) => {
-              return (
-                <ProjectCard
-                  key={project._id}
-                  projTitle={project.title}
-                  custNo={project.homeOwnerPhone}
-                  custEmail={project.homeOwnerEmail}
-                  img={project.image}
-                  percentage={project.progress}
-                />
-              )
-            })
-          }
-
+          {projects.map((project) => {
+            return (
+              <ProjectCard
+                key={project._id}
+                projTitle={project.title}
+                custNo={project.homeOwnerPhone}
+                custEmail={project.homeOwnerEmail}
+                img={project.image}
+                percentage={project.progress}
+              />
+            );
+          })}
+          <ProjectCard
+            key="1122"
+            projTitle="fedfds"
+            custNo="55"
+            custEmail="fdsfsddfs"
+            img="https://avatars.githubusercontent.com/u/121731399?v=4"
+            percentage="50"
+          />
         </div>
       </div>
-
 
       {/* modal starts here */}
       <Transition appear show={isOpen} as={React.Fragment}>
@@ -106,12 +109,13 @@ const DesignerHome = () => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  <p className="text-right cursor-pointer" onClick={closeModal}> X</p>
+                  <p className="text-right cursor-pointer" onClick={closeModal}>
+                    {" "}
+                    X
+                  </p>
                 </Dialog.Title>
 
                 <NewProjectForm />
-
-
               </div>
             </Transition.Child>
           </div>
