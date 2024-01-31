@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { Dialog, Transition } from "@headlessui/react";
 import NewProjectForm from "../../Components/Designer/Home/NewProjectForm";
+import ImageCard from "../../Components/Cards/ImageCard";
+import { useProject } from "../../context/ProjectContext";
+import ProjectCard from "../../Components/Cards/ProjectCard";
+
 
 const DesignerHome = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { projects, getProjectsByDesigner } = useProject();
 
   const openModal = () => {
     setIsOpen(true);
@@ -14,6 +20,12 @@ const DesignerHome = () => {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    getProjectsByDesigner().then((res) => {
+      console.log(res)
+    })
+  }, [])
+
   return (
     <div>
       <div className="min-h-screen bg-white">
@@ -22,7 +34,7 @@ const DesignerHome = () => {
             WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
           </p>
         </div>
-        <div className="flex m-16">
+        <center>
           <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
             <div
               className="bg-gray-200 p-4 rounded-md mb-6 flex items-center justify-center cursor-pointer"
@@ -32,11 +44,28 @@ const DesignerHome = () => {
               <span className="ml-2">Add Project</span>
             </div>
           </div>
+        </center>
+        <div className="flex m-16 gap-6">
+          {
+            projects.map((project) => {
+              return (
+                <ProjectCard
+                  key={project._id}
+                  projTitle={project.title}
+                  custNo={project.homeOwnerPhone}
+                  custEmail={project.homeOwnerEmail}
+                  img={project.image}
+                  percentage={project.progress}
+                />
+              )
+            })
+          }
+
         </div>
       </div>
 
 
-{/* modal starts here */}
+      {/* modal starts here */}
       <Transition appear show={isOpen} as={React.Fragment}>
         <Dialog
           as="div"
@@ -77,12 +106,12 @@ const DesignerHome = () => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  <p className="text-right cursor-pointer"  onClick={closeModal}> X</p>
+                  <p className="text-right cursor-pointer" onClick={closeModal}> X</p>
                 </Dialog.Title>
 
                 <NewProjectForm />
 
-               
+
               </div>
             </Transition.Child>
           </div>

@@ -10,6 +10,9 @@ import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import Profile from "./Pages/Profile/Profile";
 import DesignerHome from "./Pages/Designer/DesignerHome";
+import ProjectUpdate from "./Pages/Designer/ProjectUpdate";
+import RoomStatus from "./Pages/Designer/RoomStatus";
+
 
 
 const App = () => {
@@ -28,6 +31,8 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/designer" element={<DesignerHome />} />
+          <Route path="/project" element={<ProjectUpdate />} />
+          <Route path="/project/roomstatus" element={<RoomStatus />} />
 
           {/* PRIVATE ROUTES BELOW THIS 
            <Route path="/" element={<Private />}>

@@ -13,13 +13,18 @@ const UserSchema = mongoose.Schema({
         unique: true
     },
 
+    phone: {
+        type: String,
+        required: true
+    },
+
     password: {
         type: String,
         required: true
     },
 
 
-    role:{
+    role: {
         type: String,
         enum: ['designer', 'owner', 'vendor', 'contractor'],
         default: 'designer'

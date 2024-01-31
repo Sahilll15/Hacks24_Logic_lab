@@ -1,5 +1,6 @@
-const {User} = require('../models/user.model');
-const {Designer} = require('../models/designer.model');
+const { User } = require('../models/user.model');
+const { Designer } = require('../models/designer.model');
+const { Owner } = require('../models/owner.model');
 const bcrypt = require('bcrypt');
 const {Owner} = require('../models/owner.model');
 const {Contractor} = require('../models/contractor.model');
@@ -17,6 +18,8 @@ const register = async (req, res) => {
 
         const doesUserExists = await User.findOne({ email });
 
+
+
         if (doesUserExists) {
             return res.status(400).json({ message: `User with email ${email} already exists` });
         }
@@ -28,7 +31,7 @@ const register = async (req, res) => {
         if (user.role === 'designer') {
             await Designer.create({ name, email, phone, designer: user._id });
         } else if (user.role === 'owner') {
-            await Owner.create({ name, email, owner: user._id });
+            await Owner.create({ name, email, phone, owner: user._id });
         } else if (user.role === 'contractor') {
             await Contractor.create({ name, email, phone, contractor: user._id });
         }
@@ -66,10 +69,9 @@ const login = async (req, res) => {
 
         let designer = null;
         console.log(doesUserExists.role);
-        if (doesUserExists.role == 'designer') {
+        if (doesUserExists.role === 'designer') {
 
             designer = await Designer.findOne({ designer: doesUserExists._id });
-
         }
 
         let contractor = null;
