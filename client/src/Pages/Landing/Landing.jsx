@@ -11,7 +11,7 @@ const Landing = () => {
   return (
     <div>
       <div>
-        
+
         {/* Section 2 */}
         <section className="px-2 py-32 bg-white md:px-0">
           <div className="container items-center max-w-6xl px-8 mx-auto xl:px-5">
@@ -25,8 +25,8 @@ const Landing = () => {
                     </span>
                   </h1>
                   <p className="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">
-                    It's never been easier to build beautiful websites that
-                    convey your message and tell your story.
+                    It's never been easier to manage your project that
+                    convey your message and gives real time data.
                   </p>
                   <div className="relative flex flex-col sm:flex-row sm:space-x-4">
                     <a

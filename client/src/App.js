@@ -23,6 +23,7 @@ import Allchart from "./Pages/Charts/Allchart";
 import AmazonProductComponent from "./Pages/ExtraFeatres/Fetchproducts";
 import Zego from "./Pages/ExtraFeatres/Zego";
 import Video from "./Pages/ExtraFeatres/Video";
+import CustomerDashBoard from "./Pages/Dashboard/CustomerDashboard";
 import FeedbackForm from "./Pages/ExtraFeatres/Feedback";
 
 const App = () => {
@@ -48,8 +49,8 @@ const App = () => {
               <Route path="/contractor" element={<ContractorHome />} />
               <Route path="/contractor/task" element={<ContractorTask />} />
               <Route path="/customer" element={<CustomerHome />} />
-              <Route path="/customer/dashboard" element={<CustDash />} />
-              <Route path="/customer/chat" element={<Chat />} />
+              <Route path="/customerdashboard/:pId" element={<CustomerDashBoard />} />
+              <Route path="/chat/:pId" element={<Chat />} />
               <Route path="/customer/charts" element={<Deadline />} />
               <Route path="/ecommerce" element={<AmazonProductComponent />} />
               <Route path="/video" element={<Video />} />

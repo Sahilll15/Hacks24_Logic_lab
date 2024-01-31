@@ -3,7 +3,129 @@ const { Designer } = require('../models/designer.model');
 const { invite_home_owner_to_project } = require('../utils/email');
 const { Room } = require('../models/room.models');
 const { Task } = require('../models/task.models');
+const ObjectId = require('mongoose').Types.ObjectId;
 
+
+
+
+const getPichartDataForBudget = async (req, res) => {
+    const { id } = req.user;
+
+    try {
+        const user = await Designer.findOne({
+            designer: id
+        });
+
+        const projects = await Project.find({
+            designer: user.designer
+        });
+
+        let totalProjectsCompleted = 0;
+        let totalProjectsIncomplete = 0;
+        let totalBudget = 0;
+
+        for (const project of projects) {
+            let percentageOfCompletion = 0;
+            let totalTasks = 0;
+
+            for (const roomId of project.rooms) {
+                const room = await Room.findById(roomId);
+                totalBudget += room.budget || 0;
+
+                for (const taskId of room.tasks) {
+                    const task = await Task.findById(taskId);
+
+                    if (task?.status === 'completed') {
+                        percentageOfCompletion++;
+                    }
+
+                    totalTasks++;
+                }
+            }
+
+            if (percentageOfCompletion === totalTasks) {
+                totalProjectsCompleted++;
+            } else {
+                totalProjectsIncomplete++;
+            }
+        }
+
+        const averageProjectsCompleted = totalProjectsCompleted / projects.length;
+        const averageProjectsIncomplete = totalProjectsIncomplete / projects.length;
+        const averageBudget = totalBudget / projects.length;
+
+        res.status(200).json({
+            averageBudget,
+            totalBudget
+
+
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+};
+
+
+const getPichartData = async (req, res) => {
+    const { id } = req.user;
+
+    try {
+        const user = await Designer.findOne({
+            designer: id
+        });
+
+        const projects = await Project.find({
+            designer: user.designer
+        });
+
+        let totalProjectsCompleted = 0;
+        let totalProjectsIncomplete = 0;
+        let totalBudget = 0;
+
+        for (const project of projects) {
+            let percentageOfCompletion = 0;
+            let totalTasks = 0;
+
+            for (const roomId of project.rooms) {
+                const room = await Room.findById(roomId);
+                totalBudget += room.budget || 0;
+
+                for (const taskId of room.tasks) {
+                    const task = await Task.findById(taskId);
+
+                    if (task?.status === 'completed') {
+                        percentageOfCompletion++;
+                    }
+
+                    totalTasks++;
+                }
+            }
+
+            if (percentageOfCompletion === totalTasks) {
+                totalProjectsCompleted++;
+            } else {
+                totalProjectsIncomplete++;
+            }
+        }
+
+        const averageProjectsCompleted = totalProjectsCompleted / projects.length;
+        const averageProjectsIncomplete = totalProjectsIncomplete / projects.length;
+        const averageBudget = totalBudget / projects.length;
+
+        res.status(200).json({
+            totalProject: projects.length,
+            totalProjectsCompleted,
+            totalProjectsIncomplete,
+            averageProjectsCompleted,
+            averageProjectsIncomplete,
+
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+};
 
 const createProject = async (req, res) => {
     const { id: designerId } = req.user;
@@ -28,12 +150,21 @@ const createProject = async (req, res) => {
             homeOwnerName,
             homeOwnerEmail,
             homeOwnerPhone,
-            image: image? image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fhousing.com%2Fnews%2F3d-home-design-definition-and-how-it-can-be-created%2F&psig=AOvVaw3Incwf0tgz-ZN5omjtBdgI&ust=1706794246691000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCJit_pTeh4QDFQAAAAAdAAAAABAJ",
+            image: image ? image : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fhousing.com%2Fnews%2F3d-home-design-definition-and-how-it-can-be-created%2F&psig=AOvVaw3Incwf0tgz-ZN5omjtBdgI&ust=1706794246691000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCJit_pTeh4QDFQAAAAAdAAAAABAJ",
             password: randomPwd
         });
 
         isDesigner.projects.push(project._id);
         await isDesigner.save();
+
+        const doesOwnerExist = await Owner.findOne({ email: homeOwnerEmail });
+
+        if(doesOwnerExist){
+            doesOwnerExist.projects.push(project._id);
+            await doesOwnerExist.save();
+            project.Owner = doesOwnerExist._id
+            await project.save();
+        }
 
         await invite_home_owner_to_project(homeOwnerEmail, title, randomPwd, isDesigner.name, homeOwnerName, project._id);
 
@@ -51,20 +182,20 @@ const getProjectsByDesigner = async (req, res) => {
         const projects = await Project.find({
             designer: id
         });
-        for(const x of projects){
+        for (const x of projects) {
             let percentageOfCompletion = 0;
             let totalTasks = 0;
             let totalRooms = 0;
             let totalBudget = 0;
-            for(const y of x.rooms){
+            for (const y of x.rooms) {
 
                 const room = await Room.findById(y);
                 totalRooms++;
                 totalBudget += room.budget;
-                for(const z of room.tasks){
+                for (const z of room.tasks) {
                     const task = await Task.findById(z);
-                    
-                    if(task?.status === 'completed') percentageOfCompletion++;
+
+                    if (task?.status === 'completed') percentageOfCompletion++;
 
                     totalTasks++;
 
@@ -144,7 +275,11 @@ const getProjectById = async (req, res) => {
     const tasks_ = [];
     const rooms = [];
     try {
+
+        console.log('project id', projectId)
         const project = await Project.findById(projectId);
+        console.log('project', project)
+        let percentageOfCompletionProject = 0;
 
         for (const x of project.rooms) {
             const room = await Room.findById(x);
@@ -154,36 +289,74 @@ const getProjectById = async (req, res) => {
                 const task = await Task.findById(y);
                 if (task) tasks_.push(task);
                 if (task?.status === 'completed') percentageOfCompletion++;
-
-
             }
-
             rooms.push({
                 room,
                 percentageOfCompletion: Math.round((percentageOfCompletion / room.tasks.length) * 100)
             })
-
-          
-
         }
-
-
+        if (tasks_.length > 0) {
+            percentageOfCompletionProject = tasks_.filter(task => task.status === 'completed').length / tasks_.length * 100;
+        }
         if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }
-        res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length });
+        res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length, percentageOfCompletionProject });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
     }
 }
 
+
+const getProjectByIdChart = async (req, res) => {
+
+    const { id: projectId } = req.params;
+    const tasks_ = [];
+    const rooms = [];
+    try {
+
+        console.log('project id', projectId)
+        const project = await Project.findById(projectId);
+        console.log('project', project)
+        let percentageOfCompletionProject = 0;
+
+        for (const x of project.rooms) {
+            const room = await Room.findById(x);
+            let percentageOfCompletion = 0;
+            for (const y of room.tasks) {
+
+                const task = await Task.findById(y);
+                if (task) tasks_.push(task);
+                if (task?.status === 'completed') percentageOfCompletion++;
+            }
+            rooms.push({
+                room,
+                percentageOfCompletion: Math.round((percentageOfCompletion / room.tasks.length) * 100)
+            })
+        }
+        if (tasks_.length > 0) {
+            percentageOfCompletionProject = tasks_.filter(task => task.status === 'completed').length / tasks_.length * 100;
+        }
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+        res.status(200).json({ percentageOfCompletionProject, remaining: 100 - percentageOfCompletionProject });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+
+}
 module.exports = {
     createProject,
     getProjectsByDesigner,
     getProjectsByOwner,
     updateProject,
     deleteProject,
-    getProjectById
+    getProjectById,
+    getPichartData,
+    getPichartDataForBudget,
+    getProjectByIdChart
 }
 
