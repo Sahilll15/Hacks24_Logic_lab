@@ -33,6 +33,7 @@ const ProjectProvider = ({ children }) => {
                     Authorization: `Bearer ${localStorage.getItem('auth')}`
                 }
             });
+            console.log(response.data.projects)
             setProjects(response.data.projects)
             return response
         } catch (error) {

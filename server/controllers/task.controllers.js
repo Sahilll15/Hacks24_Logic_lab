@@ -5,7 +5,7 @@ const createTask = async (req, res) => {
     const { projectId } = req.params;
     const { roomId  } = req.params;
     try {
-        const { title, description, priority } = req.body;
+        const { title, description, budget, priority } = req.body;
         const room = await Room.findById(roomId);
 
         if (!room) {
@@ -18,11 +18,15 @@ const createTask = async (req, res) => {
             description,
             project: projectId,
             room: roomId,
+            budget,
             priority,
         });
 
 
         room.tasks.push(task._id);
+
+        room.budget += budget;
+
 
         await room.save();
 

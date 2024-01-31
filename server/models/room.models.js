@@ -27,7 +27,6 @@ const roomModel = new mongoose.Schema({
     ],
     budget: {
         type: Number,
-        required: true
     },
     project: {
         type: mongoose.Schema.Types.ObjectId,

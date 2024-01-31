@@ -47,10 +47,39 @@ const createProject = async (req, res) => {
 const getProjectsByDesigner = async (req, res) => {
     const { id } = req.user;
     try {
+        const p = []
         const projects = await Project.find({
             designer: id
         });
-        res.status(200).json({ projects });
+        for(const x of projects){
+            let percentageOfCompletion = 0;
+            let totalTasks = 0;
+            let totalRooms = 0;
+            let totalBudget = 0;
+            for(const y of x.rooms){
+
+                const room = await Room.findById(y);
+                totalRooms++;
+                totalBudget += room.budget;
+                for(const z of room.tasks){
+                    const task = await Task.findById(z);
+                    
+                    if(task?.status === 'completed') percentageOfCompletion++;
+
+                    totalTasks++;
+
+                }
+            }
+
+            p.push({
+                project: x,
+                percentageOfCompletion: Math.round((percentageOfCompletion / totalTasks) * 100),
+                totalTasks,
+                totalRooms,
+                totalBudget
+            })
+        }
+        res.status(200).json({ projects: p });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Something went wrong' });
@@ -131,14 +160,13 @@ const getProjectById = async (req, res) => {
 
             rooms.push({
                 room,
-                percentageOfCompletion: percentageOfCompletion / room.tasks.length * 100
+                percentageOfCompletion: Math.round((percentageOfCompletion / room.tasks.length) * 100)
             })
 
         }
         if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }
-        res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length });
         res.status(200).json({ project, tasks: tasks_, rooms, noOfTasks: tasks_.length, noOfRooms: rooms.length });
     } catch (error) {
         console.log(error);

@@ -48,13 +48,17 @@ const DesignerHome = () => {
           {projects.map((project) => {
             return (
               <ProjectCard
-                projectId={project._id}
-                key={project._id}
-                projTitle={project.title}
-                custNo={project.homeOwnerPhone}
-                custEmail={project.homeOwnerEmail}
-                img={project.image}
-                percentage={project.progress}
+                projectId={project.project._id}
+                key={project.project._id}
+                projTitle={project.project.title}
+                custNo={project.project.homeOwnerPhone}
+                custEmail={project.project.homeOwnerEmail}
+                img={project.project.image}
+                percentage={project.percentageOfCompletion}
+                noOfTasks={project.totalTasks}
+                noOfRooms={project.totalRooms}
+                totalBudget={project.totalBudget}
+
               />
             );
           })}
