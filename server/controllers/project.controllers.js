@@ -1,5 +1,5 @@
 const { Project } = require('../models/project.models')
-const Designer = require('../models/designer.model')
+const {Designer} = require('../models/designer.model')
 
 
 const createProject = async (req, res) => {
