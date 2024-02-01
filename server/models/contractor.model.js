@@ -11,8 +11,12 @@ const contractorModel = new mongoose.Schema({
         type: String,
         required: true,
     },
+    contractor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
 
-    tasks_assigned:[{
+    tasks_assigned: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Task'
     }],

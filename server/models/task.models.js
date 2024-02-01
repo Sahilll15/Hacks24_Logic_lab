@@ -52,6 +52,13 @@ const taskModel = new mongoose.Schema({
         default: 'low'
     },
 
+    file: {
+        type: String
+    },
+
+    completionMessage: {
+        type: String
+    }
 
 }, {
     timestamps: true

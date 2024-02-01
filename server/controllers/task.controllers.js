@@ -4,6 +4,33 @@ const { Room } = require('../models/room.models');
 
 
 
+const taskcompletion = async (req, res) => {
+
+    const { taskId } = req.params;
+
+    try {
+        const task = await Task.findById(taskId);
+
+        await Task.findByIdAndUpdate(taskId, { status: 'completed' });
+
+        let file = ''
+        if (req.file) {
+            file = req.file.path
+        }
+
+        task.completionMessage = req.body.completionMessage;
+        task.file = file;
+
+        await task.save();
+
+        res.status(200).json({ task });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+}
+
+
 const createTask = async (req, res) => {
     // const { projectId } = req.params;
     const { roomId } = req.params;
@@ -169,6 +196,7 @@ module.exports = {
     getTasksByRoom,
     updateTask,
     assignContractor,
-    deleteTask
+    deleteTask,
+    taskcompletion
 }
 

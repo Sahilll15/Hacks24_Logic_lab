@@ -1,13 +1,28 @@
 const { Contractor } = require('../models/contractor.model');
+const { Task } = require('../models/task.models')
 
 const getTasks = async (req, res) => {
 
     try {
+        console.log(req.user.id)
         const tasks = await Contractor.find({ contractor: req.user.id }).populate('tasks_assigned');
         res.status(200).json({ tasks });
     } catch (e) {
         console.log(e);
         res.status(500).json({ message: 'Something went wrong' });
+    }
+}
+
+
+const getTaskById = async (req, res) => {
+    const { taskId } = req.params;
+    try {
+        const task = await Task.findById(taskId);
+
+        res.status(200).json({ task });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong' });
     }
 }
 
@@ -33,8 +48,12 @@ const getContractorById = async (req, res) => {
     }
 }
 
+
+
+
 module.exports = {
     getTasks,
     getContractor,
-    getContractorById
+    getContractorById,
+    getTaskById
 }
