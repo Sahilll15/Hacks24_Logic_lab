@@ -24,23 +24,23 @@ const DesignerHome = () => {
 
   useEffect(() => {
     getProjectsByDesigner().then((res) => {
-      console.log(res);
+     
     });
-  }, []);
+  }, [projects]);
 
   return (
     <div>
       <div className="min-h-screen bg-gray-100">
         <div>
-          <p className="ml-8 text-2xl">
-            <br />
-            WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
+          <p className="ml-8 text-3xl">
+            <br/>
+            WELCOME, <b className="text-orange-400">Rehman Khan</b>
           </p>
         </div>
         <center>
-          <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+          <div className="max-w-md w-full  bg-white rounded-lg shadow-md">
             <div
-              className="bg-gray-200 p-4 rounded-md mb-6 flex items-center justify-center cursor-pointer"
+              className="bg-white p-4 rounded-md mb-6 flex items-center justify-center cursor-pointer"
               onClick={openModal}
             >
               <FiPlus className="text-2xl text-blue-500" />
@@ -62,6 +62,7 @@ const DesignerHome = () => {
                 noOfTasks={project.totalTasks}
                 noOfRooms={project.totalRooms}
                 totalBudget={project.totalBudget}
+                
 
               />
             );
@@ -69,14 +70,14 @@ const DesignerHome = () => {
 
         </div>
 
-        <div className="flex flex-wrap gap-6 ml-12 mt-12">
+        {/* <div className="flex flex-wrap gap-6 ml-12 mt-12">
           <div className="w-1/2">
             <Piechart api={'/pichart'} />
           </div>
           <div className="w-1/2">
             <Piechart api={'/pichartbudget'} />
           </div>
-        </div>
+        </div> */}
 
 
       </div>
@@ -128,7 +129,9 @@ const DesignerHome = () => {
                   </p>
                 </Dialog.Title>
 
-                <NewProjectForm />
+                <NewProjectForm closeModal={closeModal} />
+
+                
               </div>
             </Transition.Child>
           </div>

@@ -1,13 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CiImageOn } from 'react-icons/ci';
+import { FaXmark } from "react-icons/fa6";
 import { IoIosArrowDropdown } from "react-icons/io";
 import axios from 'axios'
-
+import FeedbackForm from '../../Pages/ExtraFeatres/Feedback';
 
 const TaskCard = ({ tasks }) => {
-  const optionsCompleted = ['Completed', 'In Progress'];
-  const optionsHigh = ['Low', 'Medium', 'High'];
 
+  const [ispriorityModalOpen, setIspriorityModalOpen] = useState(false);
+  const [priority, setPriority] = useState(''); // State to hold selected option
+  const [isstatusmodalOpen, setIsstatusmodalOpen] = useState(''); // State to hold selected option
+  const [status, setStatus] = useState(''); // State to hold selected option
+  const [isfeedbackModalOpen, setIsfeedbackModalOpen] = useState(false); // State to hold selected option
+
+  const openpriorityModal = () => {
+    setIspriorityModalOpen(true);
+  };
+
+  const closepriorityModal = () => {
+    setIspriorityModalOpen(false);
+  };
+
+  const handlepriorityChange = (e) => {
+    setPriority(e.target.value); // Update selected option when dropdown changes
+  };
+
+  const openstatusModal = () => {
+    setIsstatusmodalOpen(true);
+  };
+
+  const closestatusModal = () => {
+    setIsstatusmodalOpen(false);
+  };
+
+  const handlestatusChange = (e) => {
+    setStatus(e.target.value); // Update selected option when dropdown changes
+  };
+
+  const openfeedbackModal = () => {
+    setIsfeedbackModalOpen(true);
+  };
+
+  const closefeedbackModal = () => {
+    setIsfeedbackModalOpen(false);
+  };
 
 
   // const updateTask = async () => {
@@ -49,53 +85,138 @@ const TaskCard = ({ tasks }) => {
               <th className="border-r-2" style={{ width: "15%" }}>Contractor</th>
               <th className="border-r-2" style={{ width: "10%" }}>Status</th>
               <th className="border-r-2" style={{ width: "10%" }}>Priority</th>
-              <th className="border-r-2" style={{ width: "15%" }}>Date</th>
+              <th className="border-r-2" style={{ width: "13%" }}>Date</th>
               <th className="border-r-2" style={{ width: "15%" }}>Cost</th>
-              <th className="border-r-2" style={{ width: "15%" }}>Quote</th>
-              <th style={{ width: "20%" }}><CiImageOn /></th>
+              <th className="border-r-2" style={{ width: "10%" }}>Quote</th>
+              <th className="border-r-2" style={{ width: "5%" }}><CiImageOn /></th>
+              <th className='' style={{ width: "20%" }}>Feedback </th>
             </tr>
           </thead>
         </table>
       </div>
       {
         tasks.map((task) => (
-
-          <div className="task-card bg-indigo-400 text-white overflow-hidden rounded-lg m-2" key={task._id}>
+          <div className="task-card bg-indigo-400 text-white overflow-hidden rounded-lg px-2 m-2" key={task._id}>
             <table className="rounded-table w-full">
               <thead>
                 <tr className="">
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.title}</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task?.taskAssigned || 'No Contractor'}</th>
-                  <th className="border-r-2 p-2 bg-green-500" style={{ width: "10%" }}>
-                    <select className="appearance-none bg-transparent border-none w-full text-white focus:outline-none">
-                      <IoIosArrowDropdown />
-                      <option key={task.status} defaultValue={task.status} className='bg-gray-700' value={task.status}>{task.status}</option>
-
-                      {optionsCompleted.map((option) => (
-                        <option key={option} className='bg-gray-700' value={option}
-                        >{option}</option>
-                      ))}
-                    </select>
-                  </th>
-                  <th className="border-r-2  bg-red-300" style={{ width: "10%" }}>
-                    <select className="appearance-none bg-transparent border-none w-full text-white p-2 focus:outline-none">
-                      <option key={task.priority} defaultValue={task.priority} className='bg-gray-700' value={task.priority}>{task.priority}</option>
-                      {optionsHigh.map((option) => (
-                        <option key={option} defaultValue={task.priority} className='bg-gray-700' value={option}>{option}</option>
-                      ))}
-                    </select>
-                  </th>
-                  <th className="border-r-2 p-2" style={{ width: "15%" }}>69/69/69</th>
+                  <th className="border-r-2 p-2 bg-green-500 hover:text-black" style={{ width: "10%" }} onClick={openstatusModal}>{task.status}</th>
+                  <th className="border-r-2 p-2 bg-red-300 hover:text-black" style={{ width: "10%" }} onClick={openpriorityModal} >{task.priority}</th>
+                  <th className="border-r-2 p-2" style={{ width: "13%" }}>69/69/69</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.budget || "Budget Not decided"}</th>
-                  <th className="border-r-2 p-2" style={{ width: "15%" }}>1200</th>
-                  <th style={{ width: "20%" }}><CiImageOn /></th>
+                  <th className="border-r-2 p-2" style={{ width: "10%" }}>1200</th>
+                  <th className="border-r-2 p-2" style={{ width: "5%" }}><CiImageOn /></th>
+                  <th className='hover:text-black' style={{ width: "20%" }} onClick={openfeedbackModal}>Form</th>
                 </tr>
               </thead>
             </table>
           </div>
-
         ))
       }
+
+      {ispriorityModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded- w-80">
+            <p onClick={closepriorityModal}>
+              {/* <BsCrosshair/> */}
+              {/* <Fa-xmark/>
+               */}
+              <FaXmark className='text-xl' />
+              {/* <FontAwesomeIcon icon="fa-solid fa-xmark" /> */}
+              {/* <i class="fa-solid fa-xmark"></i> */}
+            </p>
+
+            <form className="my-form bg-gray-200 p-4 rounded-md">
+              <div className="mb-4">
+                <label htmlFor="priority" className="block text-sm font-medium text-gray-600">
+                  Select Priority:
+                </label>
+                <select
+                  id="priority"
+                  name="priority"
+                  value={priority}
+                  onChange={handlepriorityChange}
+                  className="form-select mt-1 p-2 border rounded-md w-full"
+                >
+                  <option value="" disabled>Select Priority</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+
+              <div>
+                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                  Submit
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      )}
+
+      {isstatusmodalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded- w-80">
+            <p onClick={closestatusModal}>
+              {/* <BsCrosshair/> */}
+              {/* <Fa-xmark/>
+               */}
+              <FaXmark className='text-xl' />
+              {/* <FontAwesomeIcon icon="fa-solid fa-xmark" /> */}
+              {/* <i class="fa-solid fa-xmark"></i> */}
+            </p>
+
+            <form className="my-form bg-gray-200 p-4 rounded-md">
+              <div className="mb-4">
+                <label htmlFor="status" className="block text-sm font-medium text-gray-600">
+                  Select Status:
+                </label>
+                <select
+                  id="status"
+                  name="status"
+                  value={status}
+                  onChange={handlestatusChange}
+                  className="form-select mt-1 p-2 border rounded-md w-full"
+                >
+                  <option value="" disabled>Select Status</option>
+                  <option value="completed">Completed</option>
+                  <option value="pending">Pending</option>
+                  <option value="in-progress">Inprogress</option>
+                </select>
+              </div>
+
+              <div>
+                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                  Submit
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      )}
+
+      {isfeedbackModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded- w-80">
+            <p onClick={closefeedbackModal}>
+              {/* <BsCrosshair/> */}
+              {/* <Fa-xmark/>
+               */}
+              <FaXmark className='text-xl' />
+              {/* <FontAwesomeIcon icon="fa-solid fa-xmark" /> */}
+              {/* <i class="fa-solid fa-xmark"></i> */}
+            </p>
+
+            <FeedbackForm />
+
+          </div>
+        </div>
+      )}
     </div>
   );
 };

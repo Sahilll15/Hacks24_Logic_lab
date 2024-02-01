@@ -100,7 +100,7 @@ const RoomStatus = ({ percentage }) => {
           </div>
         )}
       </div>
-      <CircularProgressBar value={percentageofcompletion} />
+      {/* <CircularProgressBar value={percentageofcompletion} /> */}
     </div>
   );
 };

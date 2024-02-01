@@ -157,6 +157,15 @@ const createProject = async (req, res) => {
         isDesigner.projects.push(project._id);
         await isDesigner.save();
 
+        const doesOwnerExist = await Owner.findOne({ email: homeOwnerEmail });
+
+        if(doesOwnerExist){
+            doesOwnerExist.projects.push(project._id);
+            await doesOwnerExist.save();
+            project.Owner = doesOwnerExist._id
+            await project.save();
+        }
+
         await invite_home_owner_to_project(homeOwnerEmail, title, randomPwd, isDesigner.name, homeOwnerName, project._id);
 
         res.status(200).json({ project });

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useProject } from "../../../context/ProjectContext";
 import { toast } from "react-toastify";
 
-const NewProjectForm = () => {
+const NewProjectForm = ({closeModal}) => {
 
 
 
@@ -37,12 +37,15 @@ const NewProjectForm = () => {
   
       if (res.status === 200) { // Assuming 201 is the status for a successful creation
         toast.success("Project created successfully!");
+        closeModal();
       } else {
         toast.error("Failed to create project. Please try again.");
+        closeModal()
       }
     } catch (error) {
-      console.error("Error creating project:", error);
+      // console.error("Error creating project:", error);
       toast.error("An error occurred while creating the project. Please try again later.");
+      closeModal()
     }
   };
   

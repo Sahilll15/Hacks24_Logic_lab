@@ -15,9 +15,17 @@ import RoomStatus from "./Pages/Designer/RoomStatus";
 import ContractorHome from "./Pages/Contractor/ContractorHome";
 import ContractorTask from "./Pages/Contractor/ContractorTask";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import CustomerHome from "./Pages/Customer/CustomerHome";
+import CustDash from "./Pages/Customer/CustDash";
+import Chat from "./Pages/Customer/Chat";
+import Deadline from "./Pages/Customer/Charts";
+import ProjDoc from "./Pages/Documents/ProjDoc";
+import Allchart from "./Pages/Charts/Allchart";
+import AmazonProductComponent from "./Pages/ExtraFeatres/Fetchproducts";
+import Zego from "./Pages/ExtraFeatres/Zego";
+import Video from "./Pages/ExtraFeatres/Video";
 import CustomerDashBoard from "./Pages/Dashboard/CustomerDashboard";
-
-
+import FeedbackForm from "./Pages/ExtraFeatres/Feedback";
 
 const App = () => {
   return (
@@ -33,14 +41,23 @@ const App = () => {
             <Route path="/" element={<Landing />} />
             <Route element={<ProtectedRoutes />} >
               <Route path="/docs" element={<Document />} />
+              <Route path="/charts" element={<Allchart />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/designer" element={<DesignerHome />} />
               <Route path="/project/:projectId" element={<ProjectUpdate />} />
               <Route path="/room/:roomId" element={<RoomStatus />} />
-              <Route path="/contractor" element={<ContractorHome />} />
+              <Route path="/contractor" element={<ContractorHome />} />des
               <Route path="/contractor/task" element={<ContractorTask />} />
-              <Route path="/customerdashboard/:projectId" element={<CustomerDashBoard />} />
+              <Route path="/customer" element={<CustomerHome />} />
+              <Route path="/customerdashboard/:pId" element={<CustomerDashBoard />} />
+              <Route path="/chat/:pId" element={<Chat />} />
+              <Route path="/customer/charts" element={<Deadline />} />
+              <Route path="/ecommerce" element={<AmazonProductComponent />} />
+              <Route path="/video" element={<Video />} />
+              <Route path="/feedback" element={<FeedbackForm />} />
+              <Route path="/meet/:roomId" element={<Zego />} />
+              <Route path="/project/documents" element={<ProjDoc />} />
 
             </Route>
 
