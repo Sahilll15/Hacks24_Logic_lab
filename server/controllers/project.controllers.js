@@ -6,6 +6,9 @@ const { Room } = require('../models/room.models');
 const { Task } = require('../models/task.models');
 const { Chat } = require('../models/chat.model');
 const ObjectId = require('mongoose').Types.ObjectId;
+const accountSid = 'ACd2353db9e8a512c240b7618e2e90fd5a';
+const authToken = '89d6daa4239c96391c717a90fbecb526';
+const client = require('twilio')(accountSid, authToken);
 
 
 
@@ -38,7 +41,7 @@ const getPichartDataForBudget = async (req, res) => {
 
             for (const roomId of project.rooms) {
                 const room = await Room.findById(roomId);
-                if(!room) continue;
+                if (!room) continue;
                 totalBudget += room.budget || 0;
 
                 for (const taskId of room.tasks) {
@@ -98,7 +101,7 @@ const getPichartData = async (req, res) => {
 
             for (const roomId of project.rooms) {
                 const room = await Room.findById(roomId);
-                if(!room) continue;
+                if (!room) continue;
                 totalBudget += room.budget || 0;
 
                 for (const taskId of room.tasks) {
@@ -169,7 +172,7 @@ const createProject = async (req, res) => {
 
         const doesOwnerExist = await Owner.findOne({ email: homeOwnerEmail });
 
-        if(doesOwnerExist){
+        if (doesOwnerExist) {
             doesOwnerExist.projects.push(project._id);
             await doesOwnerExist.save();
             project.Owner = doesOwnerExist._id
@@ -177,6 +180,17 @@ const createProject = async (req, res) => {
             const newChat = await Chat.create({ projectId: project._id });
 
         }
+
+
+
+        client.messages
+            .create({
+                body: `Your password and id for project ${title} is ${randomPwd} and ${project._id} respectively`,
+                from: 'whatsapp:+14155238886',
+                to: 'whatsapp:+919022516901'
+            })
+            .then(message => console.log(message.sid))
+
 
         await invite_home_owner_to_project(homeOwnerEmail, title, randomPwd, isDesigner.name, homeOwnerName, project._id);
 
@@ -296,7 +310,7 @@ const getProjectById = async (req, res) => {
 
         for (const x of project.rooms) {
             const room = await Room.findById(x);
-            if(!room) continue;
+            if (!room) continue;
             let percentageOfCompletion = 0;
             for (const y of room.tasks) {
 
@@ -339,7 +353,7 @@ const getProjectByIdChart = async (req, res) => {
 
         for (const x of project.rooms) {
             const room = await Room.findById(x);
-            if(!room) continue;
+            if (!room) continue;
             let percentageOfCompletion = 0;
             for (const y of room.tasks) {
 
