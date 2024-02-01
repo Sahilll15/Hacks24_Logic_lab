@@ -49,7 +49,7 @@ const DesignerHome = () => {
           </div>
         </center>
         <div className="flex  flex-wrap gap-6 ml-12 mt-12">
-          {projects.map((project) => {
+          {Array.isArray(projects) && projects?.map((project) => {
             return (
               <ProjectCard
                 projectId={project.project._id}
