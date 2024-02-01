@@ -4,8 +4,9 @@ import { FaXmark } from "react-icons/fa6";
 import { IoIosArrowDropdown } from "react-icons/io";
 import axios from 'axios'
 import FeedbackForm from '../../Pages/ExtraFeatres/Feedback';
+import { toast } from 'react-toastify'
 
-const TaskCard = ({ tasks, fetchTasks }) => {
+const TaskCard = ({ tasks, fetchTasks, roomId }) => {
 
   const [ispriorityModalOpen, setIspriorityModalOpen] = useState(false);
   const [priority, setPriority] = useState(''); // State to hold selected option
@@ -86,6 +87,7 @@ const TaskCard = ({ tasks, fetchTasks }) => {
 
     if (response.status === 200) {
 
+      toast.success('Status Updated Successfully')
       fetchTasks()
       closestatusModal()
 
@@ -109,6 +111,7 @@ const TaskCard = ({ tasks, fetchTasks }) => {
 
     if (response.status === 200) {
 
+      toast.success('Priority Updated Successfully')
       fetchTasks()
       closepriorityModal()
 
@@ -267,7 +270,7 @@ const TaskCard = ({ tasks, fetchTasks }) => {
               {/* <i class="fa-solid fa-xmark"></i> */}
             </p>
 
-            <FeedbackForm />
+            <FeedbackForm roomId={roomId} />
 
           </div>
         </div>

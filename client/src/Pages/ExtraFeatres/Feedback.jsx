@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const StarRating = ({ value, onChange }) => {
   const stars = Array.from({ length: 5 }, (_, index) => index + 1);
@@ -20,7 +21,7 @@ const StarRating = ({ value, onChange }) => {
   );
 };
 
-const FeedbackForm = () => {
+const FeedbackForm = ({ roomId }) => {
   const [formData, setFormData] = useState({
     feedbackType: 'General',
     comments: '',
@@ -46,11 +47,11 @@ const FeedbackForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`http://localhost:4000/api/v1/feedback/create/65ba0567150e86bb9e7d6626`, {
+      const response = await axios.post(`http://localhost:4000/api/v1/feedback/create/${roomId}`, {
         type: formData.feedbackType,
         message: formData.comments,
         rating: formData.rating,
-      },{
+      }, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('auth')}`
         }
@@ -58,6 +59,11 @@ const FeedbackForm = () => {
 
 
       console.log('Feedback submitted:', response.data.feedback);
+
+      if (response.status === 200) {
+        toast.success('Feedback submitted successfully!');
+      }
+
       // You can add additional logic here, such as resetting the form or navigating to another page.
     } catch (error) {
       console.error('Error submitting feedback:', error.response ? error.response.data : error.message);
