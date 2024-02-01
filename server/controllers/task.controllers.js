@@ -22,14 +22,14 @@ const createTask = async (req, res) => {
             description,
             project: projectId,
             room: roomId,
-            budget,
+            budget: budget,
             priority,
         });
 
 
         room.tasks.push(task._id);
 
-        room.budget += budget;
+        room.budget += parseInt(budget);
 
 
         await room.save();

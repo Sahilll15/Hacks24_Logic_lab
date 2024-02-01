@@ -4,6 +4,7 @@ import { FaUser, FaEnvelope } from "react-icons/fa";
 import axios from 'axios'
 import { useProject } from "../../context/ProjectContext";
 import { useParams, useNavigate } from 'react-router-dom'
+import { useAuth } from "../../context/AuthContext";
 
 
 
@@ -13,6 +14,8 @@ const ProjectUpdate = () => {
   const { projectId } = useParams();
 
   const { project, setCurrentproject } = useProject()
+
+  const {currentPrj} = useAuth();
 
   const navigate = useNavigate();
 
@@ -109,7 +112,7 @@ const ProjectUpdate = () => {
   return (
     <div className="bg-gray-50 p-4 min-h-screen rounded-md shadow-md relative">
       <div className="mb-4">
-        <p className="text-2xl font-bold text-center">PROJECT NAME / TITLE</p>
+        <p className="text-2xl font-bold text-center">{currentPrj.projTitle}</p>
       </div>
 
       <div>

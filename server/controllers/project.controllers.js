@@ -1,8 +1,10 @@
 const { Project } = require('../models/project.models')
 const { Designer } = require('../models/designer.model');
 const { invite_home_owner_to_project } = require('../utils/email');
+const { Owner } = require('../models/owner.model');
 const { Room } = require('../models/room.models');
 const { Task } = require('../models/task.models');
+const { Chat } = require('../models/chat.model');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 
@@ -20,6 +22,12 @@ const getPichartDataForBudget = async (req, res) => {
             designer: user.designer
         });
 
+
+
+        if (!projects) {
+            return res.status(400).json({ error: 'No projects found' });
+        }
+
         let totalProjectsCompleted = 0;
         let totalProjectsIncomplete = 0;
         let totalBudget = 0;
@@ -30,6 +38,7 @@ const getPichartDataForBudget = async (req, res) => {
 
             for (const roomId of project.rooms) {
                 const room = await Room.findById(roomId);
+                if(!room) continue;
                 totalBudget += room.budget || 0;
 
                 for (const taskId of room.tasks) {
@@ -89,6 +98,7 @@ const getPichartData = async (req, res) => {
 
             for (const roomId of project.rooms) {
                 const room = await Room.findById(roomId);
+                if(!room) continue;
                 totalBudget += room.budget || 0;
 
                 for (const taskId of room.tasks) {
@@ -164,6 +174,8 @@ const createProject = async (req, res) => {
             await doesOwnerExist.save();
             project.Owner = doesOwnerExist._id
             await project.save();
+            const newChat = await Chat.create({ projectId: project._id });
+
         }
 
         await invite_home_owner_to_project(homeOwnerEmail, title, randomPwd, isDesigner.name, homeOwnerName, project._id);
@@ -276,13 +288,15 @@ const getProjectById = async (req, res) => {
     const rooms = [];
     try {
 
-        console.log('project id', projectId)
         const project = await Project.findById(projectId);
-        console.log('project', project)
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
         let percentageOfCompletionProject = 0;
 
         for (const x of project.rooms) {
             const room = await Room.findById(x);
+            if(!room) continue;
             let percentageOfCompletion = 0;
             for (const y of room.tasks) {
 
@@ -318,11 +332,14 @@ const getProjectByIdChart = async (req, res) => {
 
         console.log('project id', projectId)
         const project = await Project.findById(projectId);
-        console.log('project', project)
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
         let percentageOfCompletionProject = 0;
 
         for (const x of project.rooms) {
             const room = await Room.findById(x);
+            if(!room) continue;
             let percentageOfCompletion = 0;
             for (const y of room.tasks) {
 
