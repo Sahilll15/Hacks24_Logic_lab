@@ -8,6 +8,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
+    const [currentPrj, setCurrentPrj] = useState({});
 
     const socket = io('http://localhost:4000');
 
@@ -50,7 +51,7 @@ const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, register, socket }}>
+        <AuthContext.Provider value={{ user, login, logout, currentPrj, setCurrentPrj, register, socket }}>
             {children}
         </AuthContext.Provider>
     );

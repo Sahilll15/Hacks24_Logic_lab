@@ -19,6 +19,7 @@ import CustomerHome from "./Pages/Customer/CustomerHome";
 import CustDash from "./Pages/Customer/CustDash";
 import Chat from "./Pages/Customer/Chat";
 import Deadline from "./Pages/Customer/Charts";
+import ProjDoc from "./Pages/Documents/ProjDoc";
 import Allchart from "./Pages/Charts/Allchart";
 import AmazonProductComponent from "./Pages/ExtraFeatres/Fetchproducts";
 import Zego from "./Pages/ExtraFeatres/Zego";
@@ -46,7 +47,7 @@ const App = () => {
               <Route path="/designer" element={<DesignerHome />} />
               <Route path="/project/:projectId" element={<ProjectUpdate />} />
               <Route path="/room/:roomId" element={<RoomStatus />} />
-              <Route path="/contractor" element={<ContractorHome />} />
+              <Route path="/contractor" element={<ContractorHome />} />des
               <Route path="/contractor/task" element={<ContractorTask />} />
               <Route path="/customer" element={<CustomerHome />} />
               <Route path="/customerdashboard/:pId" element={<CustomerDashBoard />} />
@@ -56,6 +57,7 @@ const App = () => {
               <Route path="/video" element={<Video />} />
               <Route path="/feedback" element={<FeedbackForm />} />
               <Route path="/meet/:roomId" element={<Zego />} />
+              <Route path="/project/documents" element={<ProjDoc />} />
 
             </Route>
 

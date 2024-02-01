@@ -12,7 +12,8 @@ import CircularProgressBar from "../../Components/Charts/ProgessBar";
 const RoomStatus = ({ percentage }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tasks, setTasks] = useState([])
-  const [percentageofcompletion, setPercentage] = useState(null)
+  const [percentageofcompletion, setPercentage] = useState(null);
+  const [trigger, setTrigger] = useState(false);
 
 
 
@@ -48,7 +49,7 @@ const RoomStatus = ({ percentage }) => {
 
   useEffect(() => {
     fetchTasks();
-  }, [roomId])
+  }, [roomId, trigger])
 
   return (
     <div>
@@ -91,12 +92,12 @@ const RoomStatus = ({ percentage }) => {
 
       </div>
 
-      <TaskCard tasks={tasks} />
+      <TaskCard tasks={tasks} fetchTasks={fetchTasks} roomId={roomId} />
 
       <div>
         {isModalOpen && (
           <div className="fixed z-10 inset-0 overflow-y-auto">
-            <TaskForm closeModal={closeModal} roomId={roomId} percentage={percentageofcompletion} />
+            <TaskForm setTriggerL = {setTrigger} closeModal={closeModal} roomId={roomId} percentage={percentageofcompletion} />
           </div>
         )}
       </div>

@@ -52,7 +52,8 @@ const Chat = () => {
     })
 
     socket.on("message", (data) => {
-      setMessages((prev) => [...prev, data])
+      if(data.user === user.name) return;
+      setMessages((prev) => [...prev, { message: data.message, user: data.user, userId: data.userId }])
     });
 
     return () => {

@@ -82,6 +82,17 @@ const CustomerHome = () => {
         />
        ))}
 
+{/* <UserProject 
+        projectId = "22"
+        projTitle = "Hello"
+        custNo = "2222"
+        custEmai ="dfs"
+        totalBudget = "4444"
+        totalTasks = "44"
+        totalRooms = "2"
+        percentage="80"
+        /> */}
+
       </div>
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex items-center justify-center">
@@ -95,7 +106,7 @@ const CustomerHome = () => {
       <br/><br/>
           <form>
             <div className="mb-4">
-              <label htmlFor="email" className="flex items-center">
+              <label htmlFor="text" className="flex items-center">
                 <RiMailLine className="mr-2" /> Email
               </label>
               <input
