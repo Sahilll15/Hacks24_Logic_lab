@@ -11,6 +11,8 @@ const ProjectCard = ({
     totalBudget,
     totalTasks,
     totalRooms,
+    noOfRooms,
+    noOfTasks,
     img,
     percentage,
 }) => {
@@ -70,9 +72,9 @@ const ProjectCard = ({
                                     </svg>
                                     <p>
                                         <span className="text-gray-900 font-bold">
-                                            {totalRooms}
+                                            {noOfRooms}
                                         </span>{" "}
-                                        Rooms
+                                        Rooms 
                                     </p>
                                 </div>
                                 <div className="flex-1 inline-flex items-center">
@@ -88,7 +90,7 @@ const ProjectCard = ({
                                     </svg>
                                     <p>
                                         <span className="text-gray-900 font-bold">
-                                            {totalTasks}
+                                            {noOfTasks}
                                         </span>{" "}
                                         Tasks
                                     </p>

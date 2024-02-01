@@ -4,6 +4,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import NewProjectForm from "../../Components/Designer/Home/NewProjectForm";
 import IMG from "../../Assets/Images/cont.png";
 import IMG2 from "../../Assets/Images/land2.png";
+import { Link } from "react-router-dom";
+
 
 const ContractorHome = () => {
   return (
@@ -34,9 +36,11 @@ const ContractorHome = () => {
                   </div>
                   <span class="font-bold  text-red-600">Rs 4000</span>
                 </div>
+                <Link to="/contractor/task">
                 <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">
                   Checkout
                 </button>
+                </Link>
               </div>
             </div>
           </div>
