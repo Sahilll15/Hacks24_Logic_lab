@@ -1,20 +1,26 @@
 import React from 'react';
 import Hall from "../../Assets/Images/Hall.png";
 import { useParams, useNavigate } from 'react-router-dom'
+import IMG1 from "../../Assets/Images/Img5.png";
+import IMG2 from "../../Assets/Images/IMG6.png";
+import IMG3 from "../../Assets/Images/land2.png";
 
-
+const images = [Hall, IMG1, IMG2, IMG3];
 
 
 const TopCard = ({ room }) => {
 
   const navigate = useNavigate();
 
+  const randomImage = images[Math.floor(Math.random() * images.length)];
+
+
 
   return (
     <div className='mt-10'>
       <div className="relative flex flex-col w-80 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
         <div className="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
-          <img src={Hall} alt="hall image" />
+          <img src={randomImage} alt="hall image" />
         </div>
         <div className="p-6">
           <h5 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
