@@ -5,13 +5,15 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import axios from 'axios'
 import FeedbackForm from '../../Pages/ExtraFeatres/Feedback';
 
-const TaskCard = ({ tasks }) => {
+const TaskCard = ({ tasks, fetchTasks }) => {
 
   const [ispriorityModalOpen, setIspriorityModalOpen] = useState(false);
   const [priority, setPriority] = useState(''); // State to hold selected option
   const [isstatusmodalOpen, setIsstatusmodalOpen] = useState(''); // State to hold selected option
   const [status, setStatus] = useState(''); // State to hold selected option
   const [isfeedbackModalOpen, setIsfeedbackModalOpen] = useState(false); // State to hold selected option
+
+  const [activeTask, setActiveTask] = useState(null)
 
   const openpriorityModal = () => {
     setIspriorityModalOpen(true);
@@ -68,10 +70,52 @@ const TaskCard = ({ tasks }) => {
   // }
 
 
+  const handleSubmitStatusChanged = async (e) => {
+    e.preventDefault();
+    console.log(status)
+    console.log(activeTask)
+    const response = await axios.put(`http://localhost:4000/api/v1/task/update/${activeTask}`, {
 
-  useEffect(() => {
-    console.log(tasks)
-  }, [tasks])
+      status: status
+    }, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('auth')}`
+      }
+    })
+
+
+    if (response.status === 200) {
+
+      fetchTasks()
+      closestatusModal()
+
+    }
+  }
+
+
+  const handleSubmitPriorityChanged = async (e) => {
+    e.preventDefault();
+    console.log(priority)
+    console.log(activeTask)
+    const response = await axios.put(`http://localhost:4000/api/v1/task/update/${activeTask}`, {
+
+      priority: priority
+    }, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('auth')}`
+      }
+    })
+
+
+    if (response.status === 200) {
+
+      fetchTasks()
+      closepriorityModal()
+
+    }
+  }
+
+
 
 
 
@@ -102,8 +146,19 @@ const TaskCard = ({ tasks }) => {
                 <tr className="">
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.title}</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task?.taskAssigned || 'No Contractor'}</th>
-                  <th className="border-r-2 p-2 bg-green-500 hover:text-black" style={{ width: "10%" }} onClick={openstatusModal}>{task.status}</th>
-                  <th className="border-r-2 p-2 bg-red-300 hover:text-black" style={{ width: "10%" }} onClick={openpriorityModal} >{task.priority}</th>
+                  <th className="border-r-2 p-2 bg-green-500 hover:text-black" style={{ width: "10%" }} accordion
+
+                    onClick={() => {
+                      console.log('auxclick', task._id)
+
+                      setActiveTask(task._id)
+                      openstatusModal()
+                    }}
+                  >{task.status}</th>
+                  <th className="border-r-2 p-2 bg-red-300 hover:text-black" style={{ width: "10%" }} onClick={() => {
+                    setActiveTask(task._id)
+                    openpriorityModal()
+                  }} >{task.priority}</th>
                   <th className="border-r-2 p-2" style={{ width: "13%" }}>69/69/69</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.budget || "Budget Not decided"}</th>
                   <th className="border-r-2 p-2" style={{ width: "10%" }}>1200</th>
@@ -128,7 +183,7 @@ const TaskCard = ({ tasks }) => {
               {/* <i class="fa-solid fa-xmark"></i> */}
             </p>
 
-            <form className="my-form bg-gray-200 p-4 rounded-md">
+            <form className="my-form bg-gray-200 p-4 rounded-md" onSubmit={handleSubmitPriorityChanged}>
               <div className="mb-4">
                 <label htmlFor="priority" className="block text-sm font-medium text-gray-600">
                   Select Priority:
@@ -148,7 +203,7 @@ const TaskCard = ({ tasks }) => {
               </div>
 
               <div>
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700" >
                   Submit
                 </button>
               </div>
@@ -170,7 +225,7 @@ const TaskCard = ({ tasks }) => {
               {/* <i class="fa-solid fa-xmark"></i> */}
             </p>
 
-            <form className="my-form bg-gray-200 p-4 rounded-md">
+            <form className="my-form bg-gray-200 p-4 rounded-md" onSubmit={handleSubmitStatusChanged}>
               <div className="mb-4">
                 <label htmlFor="status" className="block text-sm font-medium text-gray-600">
                   Select Status:

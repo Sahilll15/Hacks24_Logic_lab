@@ -91,7 +91,7 @@ const RoomStatus = ({ percentage }) => {
 
       </div>
 
-      <TaskCard tasks={tasks} />
+      <TaskCard tasks={tasks} fetchTasks={fetchTasks} />
 
       <div>
         {isModalOpen && (
