@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
 
-const TaskForm = ({ closeModal, roomId, percentage }) => {
+const TaskForm = ({ closeModal,setTriggerL, roomId, percentage }) => {
 
 
   const addTask = async () => {
@@ -12,7 +12,7 @@ const TaskForm = ({ closeModal, roomId, percentage }) => {
         title: title,
         description: description,
         priority: priority,
-        budget: budget
+        budget: parseInt(budget)
       }, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('auth')}`
@@ -23,13 +23,16 @@ const TaskForm = ({ closeModal, roomId, percentage }) => {
 
     } catch (error) {
       console.log(error)
+    }finally{
+      closeModal();
+      setTriggerL((prev) => !prev)
     }
   }
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [priority, setPriority] = useState('');
-  const [budget, setBudget] = useState('');
+  const [priority, setPriority] = useState('low');
+  const [budget, setBudget] = useState(0);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -122,7 +125,7 @@ const TaskForm = ({ closeModal, roomId, percentage }) => {
                   Budget
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="budget"
                   value={budget}
                   onChange={handleBudgetChange}

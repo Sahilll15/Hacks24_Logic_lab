@@ -4,6 +4,7 @@ import Piechart from '../../Components/Charts/PieChart'
 import axios from 'axios'
 import { useProject } from '../../context/ProjectContext'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 
 
 
@@ -19,6 +20,8 @@ const CustomerDashBoard = () => {
 
     const { pId } = useParams();
 
+    const {currentPrj, setCurrentPrj} = useAuth();
+
     const navigate = useNavigate();
 
 
@@ -31,7 +34,7 @@ const CustomerDashBoard = () => {
 
     const fetchRoomsById = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/api/v1/project/get-single/65ba04c7150e86bb9e7d6621`, {
+            const response = await axios.get(`http://localhost:4000/api/v1/project/get-single/${currentPrj?.projectId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('auth')}`
                 }
@@ -47,7 +50,7 @@ const CustomerDashBoard = () => {
 
     const fetchRoomChartById = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/api/v1/project/getProjectByIdChart/65ba04c7150e86bb9e7d6621`, {
+            const response = await axios.get(`http://localhost:4000/api/v1/project/getProjectByIdChart/${currentPrj?.projectId}`, {
                 headers: {
 
                     'Authorization': `Bearer ${localStorage.getItem('auth')}`
@@ -66,6 +69,7 @@ const CustomerDashBoard = () => {
     }
 
     useEffect(() => {
+        if (!currentPrj) return;
         fetchRoomChartById()
         fetchRoomsById()
     }, [])
@@ -166,7 +170,7 @@ const CustomerDashBoard = () => {
                                 {/* <div className="flex items-center justify-center h-full px-4 py-16 text-gray-400 text-3xl font-semibold bg-gray-100 border-2 border-gray-200 border-dashed rounded-md">Chart</div> */}
                                 {
 
-                                    <Piechart api={'getProjectByIdChart/65ba04c7150e86bb9e7d6621'} />
+                                    <Piechart api={`getProjectByIdChart/${currentPrj?.projectId}`} />
                                 }
                             </div>
                         </div>
