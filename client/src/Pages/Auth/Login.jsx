@@ -22,12 +22,25 @@ const Login = () => {
   };
 
   const handleSignIn = () => {
-    // toast.success('login')
-    login(email, password).then(() => {
-      navigate('/');
-      toast.success('login succesfull')
-    })
+    // Assuming your login function returns a Promise
+    login(email, password)
+      .then((response) => {
+        if (response.status === 200) {
+          // Successful login
+          navigate('/');
+          toast.success('Login successful');
+        } else {
+          // Handle other status codes if needed
+          toast.error(`Unexpected status code: ${response.message}`);
+        }
+      })
+      .catch((error) => {
+        // Assuming the error message is in the error.response.data.message
+        const errorMessage = error.response?.message || 'An error occurred';
+        toast.error(errorMessage);
+      });
   };
+  
 
 
   return (
