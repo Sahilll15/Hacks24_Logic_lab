@@ -27,6 +27,8 @@ app.get('/', (req, res) => {
 }
 );
 
+app.use('/uploads', express.static('uploads'));
+
 
 
 const server = app.listen(process.env.PORT, () => {
