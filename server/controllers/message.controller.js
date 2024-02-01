@@ -1,5 +1,10 @@
 const {Message} = require('../models/message.model');
+const {User} = require('../models/user.model');
 const {Chat} = require('../models/chat.model');
+const {Project} = require('../models/project.models');
+const { pleaseReadUnreadMsgsTemplate } = require('../utils/emailTemplate');
+const { please_read_unread_msgs } = require('../utils/email');
+
 
 const createMessage = async (req, res) => {
 
@@ -16,6 +21,7 @@ const createMessage = async (req, res) => {
         const message_ = await Message.create({ content, chatId: chat._id, sender: req.user.id });
         chatI.messages.push(message_._id);
         chatI.latestMessage = message_._id;
+        message_.readBy.push(req.user.id);
         await chatI.save();
         res.status(200).json({ message_, message: "Message sent successfully" });
     } catch (error) {
@@ -84,4 +90,70 @@ const deleteMessages = async (req, res) => {
 
 }
 
-module.exports = { createMessage, getCommunityMessages, deleteMessages };
+const readAllMessages = async (req, res) => {
+
+    const { id } = req.params;
+
+    try{
+        const community = await Chat.findOne({projectId: id});
+        if(!community){
+            return res.status(400).json({ error: "No such community exists" });
+        }
+        const messages = await Message.find({chatId: id});
+        for(const message of messages){
+            if(!message.readBy.includes(req.user.id)){
+                message.readBy.push(req.user.id);
+                await message.save();
+            }
+        }
+        res.status(200).json({ message: "All messages read successfully" });
+    }catch(error){
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+
+const hasMessagesBeenRead = async (req, res) => {
+
+    try{
+
+        const { id } = req.params;
+
+        const community = await Chat.find({projectId: id});
+
+        const project = await Project.findById(id);
+
+        if(!project){
+            return res.status(400).json({ error: "No such project exists" });
+        }
+
+        if(!community){
+            return res.status(400).json({ error: "No such community exists" });
+        }
+
+        const messages = await Message.find({chatId: id});
+
+        let flag = false;
+        let user = null;
+
+        for(const message of messages){
+            if(!message.readBy.includes(req.user.id)){
+               flag = true;
+                user = await User.findById(message.sender);
+
+            }
+        }
+
+        if(flag){
+            await please_read_unread_msgs(user.name, project.name);
+        }
+
+
+    }catch(error){
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+module.exports = { createMessage, getCommunityMessages, deleteMessages, hasMessagesBeenRead, readAllMessages };

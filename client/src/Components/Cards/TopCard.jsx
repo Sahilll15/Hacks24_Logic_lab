@@ -1,15 +1,16 @@
 import React from 'react';
 import Hall from "../../Assets/Images/Hall.png";
 import { useParams, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext';
 
 
 
 
-const TopCard = ({ room }) => {
+const TopCard = ({ room,setCurrentRoomL }) => {
 
   const navigate = useNavigate();
 
-
+  const {currentRoom, setCurrentRoom} = useAuth();
   return (
     <div className='mt-10'>
       <div className="relative flex flex-col w-80 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
@@ -51,6 +52,7 @@ const TopCard = ({ room }) => {
 
             className="select-none rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-gray-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             onClick={() => {
+              setCurrentRoom(room.room);
               navigate(`/room/${room.room._id}`)
             }}
           >
