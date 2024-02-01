@@ -101,7 +101,7 @@ const Chat = () => {
             </div>
             <div className="ml-auto">
               <ul className="flex flex-row items-center space-x-2">
-                <li>
+                {/* <li>
                   <a href="#" className="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-400 h-10 w-10 rounded-full">
                     <span>
                       <svg className="w-5 h-5" fill="currentColor" stroke="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -109,9 +109,9 @@ const Chat = () => {
                       </svg>
                     </span>
                   </a>
-                </li>
+                </li> */}
                 <li>
-                  <a href="#" className="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-400 h-10 w-10 rounded-full">
+                  <a href="/video" className="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-400 h-10 w-10 rounded-full">
                     <span>
                       <svg className="w-5 h-5" fill="currentColor" stroke="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
