@@ -11,3 +11,30 @@ const getTasks = async (req, res) => {
     }
 }
 
+const getContractor = async (req, res) => {
+    try {
+        const contractor = await Contractor.find();
+        res.status(200).json({ contractor });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+}
+
+
+const getContractorById = async (req, res) => {
+    const { contractorId } = req.params;
+    try {
+        const contractor = await Contractor.findById(contractorId);
+        res.status(200).json({ contractor });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+}
+
+module.exports = {
+    getTasks,
+    getContractor,
+    getContractorById
+}

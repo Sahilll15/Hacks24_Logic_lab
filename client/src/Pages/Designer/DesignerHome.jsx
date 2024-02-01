@@ -7,11 +7,13 @@ import { useProject } from "../../context/ProjectContext";
 import ProjectCard from "../../Components/Cards/ProjectCard";
 import { toast } from "react-toastify";
 import Piechart from "../../Components/Charts/PieChart";
+import { useAuth } from "../../context/AuthContext";
 
 
 const DesignerHome = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const {user} = useAuth();
   const { projects, getProjectsByDesigner } = useProject();
 
   const openModal = () => {
@@ -26,7 +28,7 @@ const DesignerHome = () => {
     getProjectsByDesigner().then((res) => {
      
     });
-  }, [projects]);
+  }, []);
 
   return (
     <div>
@@ -34,7 +36,7 @@ const DesignerHome = () => {
         <div>
           <p className="ml-8 text-3xl">
             <br/>
-            WELCOME, <b className="text-orange-400">Rehman Khan</b>
+            WELCOME, <b className="text-orange-400">{user?.name}</b>
           </p>
         </div>
         <center>

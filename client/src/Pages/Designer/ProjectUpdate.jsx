@@ -15,7 +15,7 @@ const ProjectUpdate = () => {
 
   const { project, setCurrentproject } = useProject()
 
-  const {currentPrj} = useAuth();
+  const {currentPrj, currentRoom, setCurrentRoom} = useAuth();
 
   const navigate = useNavigate();
 
@@ -35,8 +35,6 @@ const ProjectUpdate = () => {
         }
       })
 
-      console.log(response)
-      console.log(response.data)
       setRooms(response.data.rooms)
     } catch (error) {
       console.log(error)
@@ -145,6 +143,7 @@ const ProjectUpdate = () => {
                 <div className=" ">
                   <TopCard
                     room={room}
+                    setCurrentRoomL={setCurrentRoom}
                   />
                 </div>
               )

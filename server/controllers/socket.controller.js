@@ -1,3 +1,5 @@
+const {Message} = require('../models/message.model');
+
 const socketCtrl = (io) => {
     io.on('connection', (socket) => {
         const userId = socket.id;
@@ -19,8 +21,11 @@ const handleConnection = (socket, io, userId) => {
 
     socket.on('sendMessage', async ({ chatId, user, message, userId }) => {
 
+        
+        
         io.to(chatId).emit('message', { user: user, message, userId });
 
+        
 
     });
 

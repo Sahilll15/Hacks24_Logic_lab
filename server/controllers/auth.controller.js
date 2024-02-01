@@ -48,6 +48,7 @@ const register = async (req, res) => {
             await Contractor.create({ name, email, phone, contractor: user._id });
         }
 
+
         return res.status(201).json({ message: `${role} registered successfully` });
     } catch (err) {
         console.log(err);

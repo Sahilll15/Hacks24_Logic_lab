@@ -6,6 +6,7 @@ import TaskForm from "../../Components/Designer/Form/TaskForm";
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import CircularProgressBar from "../../Components/Charts/ProgessBar";
+import { useAuth } from "../../context/AuthContext";
 
 
 
@@ -15,7 +16,7 @@ const RoomStatus = ({ percentage }) => {
   const [percentageofcompletion, setPercentage] = useState(null);
   const [trigger, setTrigger] = useState(false);
 
-
+  const {currentRoom} =useAuth()
 
 
   const { roomId } = useParams();
@@ -37,8 +38,7 @@ const RoomStatus = ({ percentage }) => {
         }
       })
 
-      console.log(response)
-      console.log(response.data.tasks)
+     
       setTasks(response.data.tasks)
       setPercentage(Math.round(response.data.percentageOfCompletion))
 
@@ -54,7 +54,7 @@ const RoomStatus = ({ percentage }) => {
   return (
     <div>
       <div className="m-2 p-4 text-2xl">
-        Drawing Room Status
+        {currentRoom?.title} Status
 
         <button type="button" class="btn btn-outline-primary border-2 p-2  rounded-lg ml-4" onClick={() => {
           navigate(`/customerdashboard/${roomId}`)

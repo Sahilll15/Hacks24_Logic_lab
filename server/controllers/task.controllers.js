@@ -62,7 +62,7 @@ const getTasksByRoom = async (req, res) => {
     try {
         const tasks = await Task.find({
             room: roomId
-        });
+        }).populate('contractor');
         const percentageOfCompletion = tasks.filter(task => task.status === 'completed').length / tasks.length * 100;
         res.status(200).json({ tasks, percentageOfCompletion });
     } catch (error) {
@@ -103,6 +103,9 @@ const updateTask = async (req, res) => {
 
 const assignContractor = async (req, res) => {
     const { taskId, contractorId } = req.params;
+
+    console.log('taskId', taskId)
+    console.log('contractorId', contractorId)
 
     try {
         const task = await Task.findByIdAndUpdate(taskId, {
