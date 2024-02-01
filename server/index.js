@@ -9,6 +9,7 @@ const ownerRoutes = require('./routes/owner.routes')
 const { Server } = require('socket.io');
 const socketCtrl = require('./controllers/socket.controller')
 const feedbackRoutes = require('./routes/feedback.routes')
+const contractorRoutes = require('./routes/contractors.routes')
 
 const app = express();
 require('dotenv').config()
@@ -54,4 +55,5 @@ app.use('/api/v1/task', taskRoutes);
 app.use('/api/v1/message', messageRoutes);
 app.use('/api/v1/chat', chatRoutes);
 app.use('/api/v1/owner', ownerRoutes);
+app.use('/api/v1/contractor', contractorRoutes);
 
