@@ -186,7 +186,16 @@ const TaskCard = ({ tasks, fetchTasks, roomId }) => {
                   <th className="border-r-2 p-2" style={{ width: "13%" }}>69/69/69</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.budget || "Budget Not decided"}</th>
                   <th className="border-r-2 p-2" style={{ width: "10%" }}>1200</th>
-                  <th className="border-r-2 p-2" style={{ width: "5%" }}><CiImageOn /></th>
+                  <th className="border-r-2 p-2" style={{ width: "5%" }}
+                    onClick={() => {
+                      if (task.file) {
+                        window.open(`http://localhost:4000/${task.file}`)
+                      }
+                      else {
+                        toast.error('No file available as task is not completed')
+                      }
+                    }}
+                  ><CiImageOn /></th>
                   <th className='hover:text-black' style={{ width: "20%" }} onClick={openfeedbackModal}>Form</th>
                 </tr>
               </thead>
