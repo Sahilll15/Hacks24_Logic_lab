@@ -26,6 +26,7 @@
     "react-select": "^5.8.0",
     "react-three-fiber": "^6.0.13",
     "react-toastify": "^10.0.4",
+    "rupee-currency-formatter": "^1.0.2",
     "socket.io-client": "^4.7.4",
     "three": "^0.160.1",
     "web-vitals": "^2.1.4"

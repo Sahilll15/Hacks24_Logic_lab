@@ -1,55 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {rupeeCurrencyFormatter} from 'rupee-currency-formatter';
 
 const PredictionForm = ({ closeModal, setTriggerL }) => {
 
 
-    function numberToRupeesWords(num) {
-        const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
-        const teens = ['', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-    
-        function convertLessThanThousand(n) {
-            let words = '';
-            if (n >= 100) {
-                words += ones[Math.floor(n / 100)] + ' Hundred ';
-                n %= 100;
-            }
-            if (n >= 20) {
-                words += tens[Math.floor(n / 10)] + ' ';
-                n %= 10;
-            }
-            if (n > 0) {
-                if (n < 10) {
-                    words += ones[n];
-                } else {
-                    words += teens[n - 10];
-                }
-            }
-            return words.trim();
-        }
-    
-        function convertSegments(num) {
-            let words = '';
-            const segments = ['', 'Thousand', 'Lakh', 'Crore'];
-            let segmentIndex = 0;
-    
-            while (num > 0) {
-                if (num % 1000 !== 0) {
-                    words = convertLessThanThousand(num % 1000) + ' ' + segments[segmentIndex] + ' ' + words;
-                }
-                num = Math.floor(num / 1000);
-                segmentIndex++;
-            }
-            return words.trim();
-        }
-    
-        const rupees = convertSegments(Math.floor(num));
-        const paise = num.toFixed(2).split('.')[1]; // Extract paise part
-        const paiseWords = paise ? 'and ' + convertLessThanThousand(Number(paise)) + ' Paise' : ''; // Convert paise part to words
-        return rupees + ' Rupees ' + paiseWords;
-    }
-    
 
     const [predictionCost,setPredictionCost]=useState(null);
 
@@ -103,9 +58,10 @@ const PredictionForm = ({ closeModal, setTriggerL }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const numericValue = parseFloat(value);
     setFormData({
       ...formData,
-      [name]: value
+      [name]: numericValue
     });
   };
 
@@ -138,7 +94,8 @@ const PredictionForm = ({ closeModal, setTriggerL }) => {
                     {key.replace(/_/g, ' ')}
                   </label>
                   <input
-                    type={typeof formData[key] === 'number' ? 'number' : 'text'}
+                    // type={typeof formData[key] === 'number' ? 'number' : 'text'}
+                    type='number'
                     id={key}
                     name={key}
                     value={formData[key]}
@@ -162,7 +119,7 @@ const PredictionForm = ({ closeModal, setTriggerL }) => {
                     <div className='mt-10 '>
                         <p>The predicted cost for the renovation of the house is</p>
                         <h1 className='text-black font-bold text-xl'>Rs {Math.round(predictionCost)}</h1>
-                        <h1 className='text-black  text-xl'>{numberToRupeesWords(Math.round(predictionCost))}</h1>
+                        <h1 className='text-black  text-xl'>{rupeeCurrencyFormatter(Math.round(predictionCost))}</h1>
                     </div>
                 )
             }
