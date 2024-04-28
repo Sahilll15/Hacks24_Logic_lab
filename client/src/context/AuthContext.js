@@ -19,10 +19,11 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem('auth', response.data.token)
             localStorage.setItem('user', JSON.stringify(response.data.user))
             setToken(response.data.token);
-            return response
+            return 'success'
         } catch (error) {
             console.log(error);
-            return error.response;
+            return 'error'
+
         }
     };
 
@@ -49,6 +50,10 @@ const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
+
+    useEffect(()=>{
+        console.log('user',user)
+    },[user])
 
     return (
         <AuthContext.Provider value={{ user, login, logout, currentPrj, setCurrentPrj, register, socket }}>

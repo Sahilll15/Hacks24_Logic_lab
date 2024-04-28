@@ -142,6 +142,7 @@ const getPichartData = async (req, res) => {
 
 const createProject = async (req, res) => {
     const { id: designerId } = req.user;
+
     try {
 
         const isDesigner = await Designer.findOne({ designer: designerId });
@@ -183,13 +184,13 @@ const createProject = async (req, res) => {
 
 
 
-        client.messages
-            .create({
-                body: `Your password and id for project ${title} is ${randomPwd} and ${project._id} respectively`,
-                from: 'whatsapp:+14155238886',
-                to: 'whatsapp:+919022516901'
-            })
-            .then(message => console.log(message.sid))
+        // client.messages
+        //     .create({
+        //         body: `Your password and id for project ${title} is ${randomPwd} and ${project._id} respectively`,
+        //         from: 'whatsapp:+14155238886',
+        //         to: 'whatsapp:+919022516901'
+        //     })
+        //     .then(message => console.log(message.sid))
 
 
         await invite_home_owner_to_project(homeOwnerEmail, title, randomPwd, isDesigner.name, homeOwnerName, project._id);

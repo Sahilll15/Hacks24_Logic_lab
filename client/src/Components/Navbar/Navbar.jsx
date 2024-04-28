@@ -1,8 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../../Assets/Logo/logo icon.png'
+import { useAuth } from '../../context/AuthContext'
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const { user } = useAuth();
+  console.log(user)
+
+
+  useEffect(()=>{
+    console.log('user from navbar',user)
+  },[user])
 
   return (
     <nav className="bg-gray-900">
@@ -15,7 +24,10 @@ const Navbar = () => {
             <div className="hidden md:block w-full">
               <div className="ml-10 flex items-center space-x-4 ">
                 <NavLink to={'/designer'} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Home</NavLink>
-                <NavLink to={"/dashboard"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">DashBoard</NavLink>
+               {
+                  user && user.role === 'designer' && <NavLink to={'/dashboard'} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">DashBoard</NavLink>
+               }
+                {/* <NavLink to={"/dashboard"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">DashBoard</NavLink> */}
                 <NavLink to={"/ecommerce"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Ecommerce</NavLink>
                 <NavLink to={"/profile"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Profile</NavLink>
                 <div className='flex justify-end w-full'>

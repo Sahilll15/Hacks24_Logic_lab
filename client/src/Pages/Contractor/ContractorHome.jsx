@@ -25,7 +25,7 @@ const ContractorHome = () => {
       tasks_assigned
     )
 
-    console.log(response.data.tasks[0].tasks_assigned)
+    // console.log(response.data.tasks[0].tasks_assigned)
   }
 
 
@@ -44,14 +44,20 @@ const ContractorHome = () => {
         </div>
 
         {
+          tasks.length === 0 ? (
+            <>
+            <h1 className="text-center font-bold text-xl">No tasks Assigned</h1>
+            </>
+          ):
+          null
+        }
+
+        {
           tasks?.map((task) => (
             <div className="flex">
-              <div>
-                <img src={IMG} alt="" className="mt-9 ml-9" />
-              </div>
-
+         
               <div className="flex flex-col md:flex-row">
-                <div class="w-60  h-96  p-3 m-16 bg-gray-200 flex flex-col gap-1 rounded-2xl">
+                <div class=" max-w-72  h-96  p-3 m-16 bg-gray-200 flex flex-col gap-1 rounded-2xl">
                   <div class="h-48 m-4 bg-gray-700 rounded-xl">
                     <img src={IMG2} alt="" />
                   </div>

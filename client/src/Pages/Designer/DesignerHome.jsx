@@ -22,11 +22,15 @@ const DesignerHome = () => {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    getProjectsByDesigner().then((res) => {
+  // useEffect(() => {
+  //   getProjectsByDesigner().then((res) => {
      
-    });
-  }, [projects]);
+  //   });
+  // }, [projects]);
+
+  useEffect(()=>{
+    getProjectsByDesigner();
+  },[])
 
   return (
     <div>

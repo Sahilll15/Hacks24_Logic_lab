@@ -5,7 +5,9 @@ const getTasks = async (req, res) => {
 
     try {
         console.log(req.user.id)
+        console.log('req.user',req.user)
         const tasks = await Contractor.find({ contractor: req.user.id }).populate('tasks_assigned');
+        console.log(tasks)
         res.status(200).json({ tasks });
     } catch (e) {
         console.log(e);
