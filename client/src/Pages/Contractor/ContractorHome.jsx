@@ -73,7 +73,7 @@ const ContractorHome = () => {
                     </div>
                     <Link to={`/contractor/${task._id}`} >
                       <button class="hover:bg-sky-700 text-gray-50 bg-sky-800 py-2 rounded-md">
-                        Start Work
+                        Start Work today sda
                       </button>
                     </Link>
                   </div>

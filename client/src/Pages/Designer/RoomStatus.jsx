@@ -5,21 +5,32 @@ import { MdAddTask } from "react-icons/md";
 import TaskForm from "../../Components/Designer/Form/TaskForm";
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import PredictionForm from "../../Components/Designer/Form/PredictionForm";
 import CircularProgressBar from "../../Components/Charts/ProgessBar";
 
 
 
 const RoomStatus = ({ percentage }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPredictionModalOpen, setIsPredictionModalOpen] = useState(false);
+
   const [tasks, setTasks] = useState([])
   const [percentageofcompletion, setPercentage] = useState(null);
   const [trigger, setTrigger] = useState(false);
+  const [predictionModelOpen,setPridctionModel]=useState(false);
 
 
 
 
   const { roomId } = useParams();
   const navigate = useNavigate();
+  const openPredictionModel=()=>{
+    setPridctionModel(true);
+  }
+  const closePredictionModel=()=>{
+    setPridctionModel(false);
+  }
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -66,6 +77,11 @@ const RoomStatus = ({ percentage }) => {
           <div className="flex text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
           Assign Contractor
           </div>
+          <div onClick={()=>{
+            setPridctionModel(!predictionModelOpen)
+          }} className="flextext-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+         Predict Cost
+          </div>
         </div>
       </div>
       {/* 
@@ -88,11 +104,20 @@ const RoomStatus = ({ percentage }) => {
         </div>
       </div> */}
 
-      <div>
-
-      </div>
+    
 
       <TaskCard tasks={tasks} fetchTasks={fetchTasks} roomId={roomId} />
+
+      <div>
+        {
+          predictionModelOpen ? (
+            <>
+                <PredictionForm setTriggerL = {setTrigger} closeModal={closePredictionModel} />
+            </>
+          ):null
+        }
+
+      </div>
 
       <div>
         {isModalOpen && (
