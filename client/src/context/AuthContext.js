@@ -1,25 +1,40 @@
 // AuthContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
+    const [currentPrj, setCurrentPrj] = useState({});
+
+    const socket = io('http://localhost:4000');
 
     const login = async (email, password) => {
         try {
             const response = await axios.post('http://localhost:4000/api/v1/auth/login', { email, password });
             setUser(response.data.user);
             localStorage.setItem('auth', response.data.token)
+            localStorage.setItem('user', JSON.stringify(response.data.user))
             setToken(response.data.token);
-            return response
+            return 'success'
         } catch (error) {
             console.log(error);
-            return error.response;
+            return 'error'
+
         }
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem('auth');
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (token) {
+            setUser(user);
+            setToken(token);
+        }
+    },[])
 
     const register = async (name, email, role, password, phoneNumber) => {
         try {
@@ -36,8 +51,12 @@ const AuthProvider = ({ children }) => {
     };
 
 
+    useEffect(()=>{
+        console.log('user',user)
+    },[user])
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, register }}>
+        <AuthContext.Provider value={{ user, login, logout, currentPrj, setCurrentPrj, register, socket }}>
             {children}
         </AuthContext.Provider>
     );

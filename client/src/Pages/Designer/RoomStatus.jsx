@@ -3,20 +3,23 @@ import TaskCard from "../../Components/Cards/TaskCard";
 import { RiUserAddFill } from "react-icons/ri";
 import { MdAddTask } from "react-icons/md";
 import TaskForm from "../../Components/Designer/Form/TaskForm";
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import CircularProgressBar from "../../Components/Charts/ProgessBar";
 
 
 
 const RoomStatus = ({ percentage }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tasks, setTasks] = useState([])
-  const [percentageofcompletion, setPercentage] = useState(null)
+  const [percentageofcompletion, setPercentage] = useState(null);
+  const [trigger, setTrigger] = useState(false);
 
 
 
 
   const { roomId } = useParams();
+  const navigate = useNavigate();
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -46,22 +49,26 @@ const RoomStatus = ({ percentage }) => {
 
   useEffect(() => {
     fetchTasks();
-  }, [roomId])
+  }, [roomId, trigger])
 
   return (
     <div>
       <div className="m-2 p-4 text-2xl">
         Drawing Room Status
+
+        <button type="button" class="btn btn-outline-primary border-2 p-2  rounded-lg ml-4" onClick={() => {
+          navigate(`/customerdashboard/${roomId}`)
+        }}>DashBoard</button>
         <div className="flex text-base mt-4 ml-8 gap-5">
-          <div className="flex " onClick={openModal}>
-            <MdAddTask /> Add Task
+          <div className="flex text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onClick={openModal}>
+            Add Task
           </div>
-          <div className="flex">
-            <RiUserAddFill />Assign Contractor
+          <div className="flex text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+          Assign Contractor
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="p-6 pt-0">
         <div className="relative pt-1">
           <div className="flex mb-2 items-center justify-between">
@@ -70,11 +77,7 @@ const RoomStatus = ({ percentage }) => {
                 Progress
               </span>
             </div>
-            <div className="text-right">
-              <span className="text-xs font-semibold inline-block text-green-600">
-                {percentageofcompletion || 20}%
-              </span>
-            </div>
+
           </div>
           <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-green-200 w-full">
             <div
@@ -83,17 +86,22 @@ const RoomStatus = ({ percentage }) => {
             ></div>
           </div>
         </div>
+      </div> */}
+
+      <div>
+
       </div>
 
-      <TaskCard tasks={tasks} />
+      <TaskCard tasks={tasks} fetchTasks={fetchTasks} roomId={roomId} />
 
       <div>
         {isModalOpen && (
           <div className="fixed z-10 inset-0 overflow-y-auto">
-            <TaskForm closeModal={closeModal} roomId={roomId} percentage={percentageofcompletion} />
+            <TaskForm setTriggerL = {setTrigger} closeModal={closeModal} roomId={roomId} percentage={percentageofcompletion} />
           </div>
         )}
       </div>
+      {/* <CircularProgressBar value={percentageofcompletion} /> */}
     </div>
   );
 };

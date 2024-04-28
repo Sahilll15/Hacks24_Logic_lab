@@ -23,9 +23,12 @@ const Login = () => {
 
   const handleSignIn = () => {
     // toast.success('login')
-    login(email, password).then(() => {
-      navigate('/');
-      toast.success('login succesfull')
+    login(email, password).then((response)=>{
+      if(response ==='success'){
+        navigate('/customer')
+      }else{
+        toast.error('Invalid credentials')
+      }
     })
   };
 

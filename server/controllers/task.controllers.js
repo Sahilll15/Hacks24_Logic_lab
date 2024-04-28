@@ -4,6 +4,33 @@ const { Room } = require('../models/room.models');
 
 
 
+const taskcompletion = async (req, res) => {
+
+    const { taskId } = req.params;
+
+    try {
+        const task = await Task.findById(taskId);
+
+        await Task.findByIdAndUpdate(taskId, { status: 'completed' });
+
+        let file = ''
+        if (req.file) {
+            file = req.file.path
+        }
+
+        task.completionMessage = req.body.completionMessage;
+        task.file = file;
+
+        await task.save();
+
+        res.status(200).json({ task });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+}
+
+
 const createTask = async (req, res) => {
     // const { projectId } = req.params;
     const { roomId } = req.params;
@@ -22,14 +49,14 @@ const createTask = async (req, res) => {
             description,
             project: projectId,
             room: roomId,
-            budget,
+            budget: budget,
             priority,
         });
 
 
         room.tasks.push(task._id);
 
-        room.budget += budget;
+        room.budget += parseInt(budget);
 
 
         await room.save();
@@ -62,7 +89,7 @@ const getTasksByRoom = async (req, res) => {
     try {
         const tasks = await Task.find({
             room: roomId
-        });
+        }).populate('contractor');
         const percentageOfCompletion = tasks.filter(task => task.status === 'completed').length / tasks.length * 100;
         res.status(200).json({ tasks, percentageOfCompletion });
     } catch (error) {
@@ -73,23 +100,39 @@ const getTasksByRoom = async (req, res) => {
 
 
 const updateTask = async (req, res) => {
-    const { id } = req.params;
+    const { taskId: id } = req.params;
+
+
     try {
 
-        const task = await Task.findByIdAndUpdate(id,
-            { $set: req.body }
+        console.log('taskid', id)
+
+        const taskFind = await Task.findById(id);
+
+        console.log('taskFind', taskFind)
+        const task = await Task.findByIdAndUpdate(
+            id,
+            { $set: req.body },
+            { new: true }
         );
+
+        if (!task) {
+            return res.status(400).json({ error: 'Task not found' });
+        }
+
         res.status(200).json({ task });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500).json({ error: 'Something went wrong' });
     }
 }
 
 
-
 const assignContractor = async (req, res) => {
     const { taskId, contractorId } = req.params;
+
+    console.log('taskId', taskId)
+    console.log('contractorId', contractorId)
 
     try {
         const task = await Task.findByIdAndUpdate(taskId, {
@@ -153,6 +196,7 @@ module.exports = {
     getTasksByRoom,
     updateTask,
     assignContractor,
-    deleteTask
+    deleteTask,
+    taskcompletion
 }
 

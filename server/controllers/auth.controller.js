@@ -48,6 +48,7 @@ const register = async (req, res) => {
             await Contractor.create({ name, email, phone, contractor: user._id });
         }
 
+
         return res.status(201).json({ message: `${role} registered successfully` });
     } catch (err) {
         console.log(err);
@@ -60,12 +61,19 @@ const login = async (req, res) => {
     try {
 
         const { email, password } = req.body;
+        console.log('email',email)
+        console.log('password',password)
+        
 
         if (!email || !password) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
-        const doesUserExists = await User.findOne({ email });
+
+        const users=await User.find();
+        console.log('users',users)
+        const doesUserExists = await User.findOne({ email:email });
+        console.log('doesUserExists',doesUserExists)
 
         if (!doesUserExists) {
             return res.status(400).json({ message: `User with email ${email} doesn't exists` });

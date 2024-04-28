@@ -1,26 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../../Assets/Logo/logo icon.png'
+import { useAuth } from '../../context/AuthContext'
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const { user } = useAuth();
+  console.log(user)
+
+
+  useEffect(()=>{
+    console.log('user from navbar',user)
+  },[user])
 
   return (
     <nav className="bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
+          <div className="flex items-center w-full">
             <div className="flex-shrink-0">
               <img className="h-10 w-15" src={logo} alt="Your Logo" />
             </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
+            <div className="hidden md:block w-full">
+              <div className="ml-10 flex items-center space-x-4 ">
                 <NavLink to={'/designer'} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Home</NavLink>
-                <NavLink href="/dashboard" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">DashBoard</NavLink>
-                <NavLink href="/profile" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Profile</NavLink>
-                <button onClick={() => {
-                  localStorage.removeItem("auth");
-                  window.location.href = "/login";
-                }} type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">LogOut</button>
+               {
+                  user && user.role === 'designer' && <NavLink to={'/dashboard'} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">DashBoard</NavLink>
+               }
+                {/* <NavLink to={"/dashboard"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">DashBoard</NavLink> */}
+                <NavLink to={"/ecommerce"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Ecommerce</NavLink>
+                <NavLink to={"/profile"} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium">Profile</NavLink>
+                <div className='flex justify-end w-full'>
+                  <button onClick={() => {
+                    localStorage.removeItem("auth");
+                    window.location.href = "/login";
+                  }} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 m-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">LogOut</button>
+                </div>
               </div>
             </div>
           </div>

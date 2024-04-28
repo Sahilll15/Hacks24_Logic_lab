@@ -6,6 +6,7 @@ import ImageCard from "../../Components/Cards/ImageCard";
 import { useProject } from "../../context/ProjectContext";
 import ProjectCard from "../../Components/Cards/ProjectCard";
 import { toast } from "react-toastify";
+import Piechart from "../../Components/Charts/PieChart";
 
 
 const DesignerHome = () => {
@@ -21,25 +22,29 @@ const DesignerHome = () => {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    getProjectsByDesigner().then((res) => {
-      console.log(res);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getProjectsByDesigner().then((res) => {
+     
+  //   });
+  // }, [projects]);
+
+  useEffect(()=>{
+    getProjectsByDesigner();
+  },[])
 
   return (
     <div>
       <div className="min-h-screen bg-gray-100">
         <div>
-          <p className="ml-8 text-2xl">
+          <p className="ml-8 text-3xl">
             <br/>
-            WELCOME, <b className="text-orange-400">DESIGNER NAME</b>
+            WELCOME, <b className="text-orange-400">Rehman Khan</b>
           </p>
         </div>
         <center>
-          <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
+          <div className="max-w-md w-full  bg-white rounded-lg shadow-md">
             <div
-              className="bg-gray-200 p-4 rounded-md mb-6 flex items-center justify-center cursor-pointer"
+              className="bg-white p-4 rounded-md mb-6 flex items-center justify-center cursor-pointer"
               onClick={openModal}
             >
               <FiPlus className="text-2xl text-blue-500" />
@@ -48,7 +53,7 @@ const DesignerHome = () => {
           </div>
         </center>
         <div className="flex  flex-wrap gap-6 ml-12 mt-12">
-          {projects.map((project) => {
+          {Array.isArray(projects) && projects?.map((project) => {
             return (
               <ProjectCard
                 projectId={project.project._id}
@@ -61,16 +66,22 @@ const DesignerHome = () => {
                 noOfTasks={project.totalTasks}
                 noOfRooms={project.totalRooms}
                 totalBudget={project.totalBudget}
+                
 
               />
             );
           })}
-          
+
         </div>
 
-
-
-
+        {/* <div className="flex flex-wrap gap-6 ml-12 mt-12">
+          <div className="w-1/2">
+            <Piechart api={'/pichart'} />
+          </div>
+          <div className="w-1/2">
+            <Piechart api={'/pichartbudget'} />
+          </div>
+        </div> */}
 
 
       </div>
@@ -122,7 +133,9 @@ const DesignerHome = () => {
                   </p>
                 </Dialog.Title>
 
-                <NewProjectForm />
+                <NewProjectForm closeModal={closeModal} />
+
+                
               </div>
             </Transition.Child>
           </div>
