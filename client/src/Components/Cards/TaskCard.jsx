@@ -183,7 +183,7 @@ const TaskCard = ({ tasks, fetchTasks, roomId }) => {
                     setActiveTask(task._id)
                     openpriorityModal()
                   }} >{task.priority}</th>
-                  <th className="border-r-2 p-2" style={{ width: "13%" }}>69/69/69</th>
+                  <th className="border-r-2 p-2" style={{ width: "13%" }}>29/04/24</th>
                   <th className="border-r-2 p-2" style={{ width: "15%" }}>{task.budget || "Budget Not decided"}</th>
                   <th className="border-r-2 p-2" style={{ width: "10%" }}>1200</th>
                   <th className="border-r-2 p-2" style={{ width: "5%" }}
